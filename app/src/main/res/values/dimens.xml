@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!--  SPECIAL  -->
+    <dimen name="size_logo_width">200dp</dimen>
+    <dimen name="size_logo_height">150dp</dimen>
+
+    <!--  FONT SIZES  -->
+    <dimen name="font_size_xxx_small">8sp</dimen>
+    <dimen name="font_size_xx_small">10sp</dimen>
+    <dimen name="font_size_x_small">12sp</dimen>
+    <dimen name="font_size_small">14sp</dimen>
+    <dimen name="font_size_normal">15sp</dimen>
+    <dimen name="font_size_large">18sp</dimen>
+    <dimen name="font_size_x_large">20sp</dimen>
+    <dimen name="font_size_xx_large">24sp</dimen>
+    <dimen name="font_size_xxx_large">28sp</dimen>
+
+    <!--  VIEW SIZES  -->
+    <dimen name="view_size_xxx_tiny">0.5dp</dimen>
+    <dimen name="view_size_xx_tiny">1dp</dimen>
+    <dimen name="view_size_x_tiny">2dp</dimen>
+    <dimen name="view_size_tiny">4dp</dimen>
+    <dimen name="view_size_xxx_small">8dp</dimen>
+    <dimen name="view_size_xx_small">12dp</dimen>
+    <dimen name="view_size_x_small">16dp</dimen>
+    <dimen name="view_size_small">24dp</dimen>
+    <dimen name="view_size_normal">32dp</dimen>
+    <dimen name="view_size_large">48dp</dimen>
+    <dimen name="view_size_x_large">64dp</dimen>
+    <dimen name="view_size_xx_large">96dp</dimen>
+    <dimen name="view_size_xxx_large">128dp</dimen>
+    <dimen name="view_size_huge">160dp</dimen>
+    <dimen name="view_size_x_huge">192dp</dimen>
+    <dimen name="view_size_xx_huge">224dp</dimen>
+    <dimen name="view_size_xxx_huge">256dp</dimen>
+
+    <!--  SPACINGS  -->
+    <dimen name="spacing_xxx_tiny">0.5dp</dimen>
+    <dimen name="spacing_xx_tiny">1dp</dimen>
+    <dimen name="spacing_x_tiny">2dp</dimen>
+    <dimen name="spacing_tiny">4dp</dimen>
+    <dimen name="spacing_xxx_small">8dp</dimen>
+    <dimen name="spacing_xx_small">12dp</dimen>
+    <dimen name="spacing_x_small">16dp</dimen>
+    <dimen name="spacing_small">20dp</dimen>
+    <dimen name="spacing_normal">24dp</dimen>
+    <dimen name="spacing_large">32dp</dimen>
+    <dimen name="spacing_x_large">64dp</dimen>
+    <dimen name="spacing_xx_large">96dp</dimen>
+    <dimen name="spacing_xxx_large">128dp</dimen>
+    <dimen name="spacing_huge">160dp</dimen>
+    <dimen name="spacing_x_huge">192dp</dimen>
+    <dimen name="spacing_xx_huge">224dp</dimen>
+    <dimen name="spacing_xxx_huge">256dp</dimen>
+
+    <!--  CORNER ROUNDING  -->
+    <dimen name="corner_rounding_small">4dp</dimen>
+    <dimen name="corner_rounding_normal">8dp</dimen>
+    <dimen name="corner_rounding_large">16dp</dimen>
+    <dimen name="corner_rounding_huge">32dp</dimen>
+
+    <!--  ELEVATIONS  -->
+    <dimen name="elevation_small">1dp</dimen>
+    <dimen name="elevation_normal">2dp</dimen>
+    <dimen name="elevation_large">4dp</dimen>
+    <dimen name="elevation_huge">8dp</dimen>
+</resources>

@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/colorLayout">
+
+    <ImageView
+        android:id="@+id/imageView"
+        android:layout_width="@dimen/view_size_xx_large"
+        android:layout_height="@dimen/view_size_xx_large"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:contentDescription="@string/app_name"
+        app:layout_constraintBottom_toTopOf="@id/guideline"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:srcCompat="@drawable/ic_icon" />
+
+    <EditText
+        android:id="@+id/etLogin"
+        style="@style/EditText"
+        android:layout_width="@dimen/view_size_xx_huge"
+        android:layout_height="wrap_content"
+        android:hint="@string/login"
+        android:inputType="text"
+        app:layout_constraintBottom_toTopOf="@id/etPassword"
+        app:layout_constraintLeft_toLeftOf="parent"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/guideline" />
+
+    <EditText
+        android:id="@+id/etPassword"
+        style="@style/EditText"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/password"
+        android:inputType="textPassword|textPhonetic"
+        app:layout_constraintBottom_toTopOf="@+id/bSignIn"
+        app:layout_constraintLeft_toLeftOf="@id/etLogin"
+        app:layout_constraintRight_toRightOf="@id/etLogin"
+        app:layout_constraintTop_toBottomOf="@id/etLogin" />
+
+    <Button
+        style="@style/ButtonAccent"
+        android:id="@+id/bSignIn"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:text="@string/sign_in"
+        app:layout_constraintBottom_toBottomOf="@id/guideline2"
+        app:layout_constraintLeft_toLeftOf="@id/etPassword"
+        app:layout_constraintRight_toRightOf="@id/etPassword"
+        app:layout_constraintTop_toBottomOf="@id/etPassword" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_begin="365dp" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_end="4dp" />
+
+</android.support.constraint.ConstraintLayout>

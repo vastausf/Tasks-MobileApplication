@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Tasks</string>
+    <string name="tasks_base_server_url">http://194.1.239.114:17646</string>
+
+    <string name="login">login</string>
+    <string name="password">password</string>
+    <string name="sign_in">sign in</string>
+
+    <string name="incorrect_login_or_password">incorrect login or password</string>
+
+    <string name="error">error</string>
+
+    <string name="heres_nothing">here\'s nothing</string>
+</resources>

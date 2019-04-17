@@ -1,0 +1,50 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+
+        <item name="android:fontFamily">@font/roboto_light</item>
+        <item name="android:textColor">@color/colorText</item>
+    </style>
+
+    <style name="SplashScreen" parent="AppTheme">
+        <item name="android:background">@drawable/background_splash</item>
+
+        <item name="android:windowTranslucentStatus">true</item>
+        <item name="android:windowTranslucentNavigation">true</item>
+    </style>
+
+    <style name="EditText" parent="AppTheme">
+        <item name="android:background">@drawable/background_edit_text</item>
+        <item name="android:padding">@dimen/spacing_xxx_small</item>
+        <item name="android:gravity">center</item>
+        <item name="android:textColorHint">@color/colorHint</item>
+        <item name="android:textSize">@dimen/font_size_large</item>
+    </style>
+
+    <style name="ButtonAccent" parent="AppTheme">
+        <item name="android:background">@drawable/background_button_accent</item>
+        <item name="android:textColor">@color/colorTextLight</item>
+        <item name="android:textSize">@dimen/font_size_large</item>
+    </style>
+
+    <style name="TextHeader" parent="AppTheme">
+        <item name="android:textSize">@dimen/font_size_large</item>
+        <item name="android:textStyle">bold</item>
+    </style>
+
+    <style name="Separator" parent="AppTheme">
+        <item name="android:background">@color/colorPlaceholder</item>
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">@dimen/view_size_x_tiny</item>
+        <item name="android:layout_marginLeft">@dimen/spacing_xx_large</item>
+        <item name="android:layout_marginRight">@dimen/spacing_xx_large</item>
+        <item name="android:layout_marginTop">@dimen/spacing_xx_small</item>
+        <item name="android:layout_marginBottom">@dimen/spacing_xx_small</item>
+    </style>
+
+</resources>

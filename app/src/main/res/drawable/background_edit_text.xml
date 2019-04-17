@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item>
+        <layer-list>
+            <item>
+                <shape android:shape="rectangle">
+                    <solid android:color="@color/colorAccent"/>
+                </shape>
+            </item>
+            <item android:bottom="@dimen/view_size_x_tiny">
+                <shape android:shape="rectangle">
+                    <solid android:color="@color/colorLayout"/>
+                </shape>
+            </item>
+        </layer-list>
+    </item>
+
+</selector>
