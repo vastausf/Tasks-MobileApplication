@@ -13,24 +13,34 @@ constructor(
 
     private val contentType = "application/json"
 
-    fun getToken(login: String, password: String): Single<AuthTokenGetI> {
+    fun getToken(login: String, password: String): Single<AuthTokenGetC> {
         return tasksApiService.authTokenGet(
             contentType,
-            AuthTokenGetO(
+            AuthTokenGetS(
                 login,
                 password
             )
         )
     }
 
-    fun getProjectList(offset: Int, limit: Int, parameters: ProjectDataSearch): Single<ProjectFindI> {
+    fun getProjectList(offset: Int, limit: Int, parameters: ProjectDataSearch): Single<ProjectFindC> {
         return tasksApiService.projectFind(
             contentType,
             tasksTokenStore.accessToken,
-            ProjectFindO(
+            ProjectFindS(
                 offset,
                 limit,
                 parameters
+            )
+        )
+    }
+
+    fun getProjectFullData(projectId: Int): Single<ProjectDataFullC> {
+        return tasksApiService.projectFullData(
+            contentType,
+            tasksTokenStore.accessToken,
+            ProjectDataFullS(
+                projectId
             )
         )
     }

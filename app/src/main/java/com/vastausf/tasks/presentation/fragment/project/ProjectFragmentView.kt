@@ -1,6 +1,7 @@
 package com.vastausf.tasks.presentation.fragment.project
 
 import com.vastausf.tasks.model.api.tasksApiData.ProjectDataFull
+import com.vastausf.tasks.model.api.tasksApiData.ProjectDataShort
 import com.vastausf.tasks.presentation.fragment.base.BaseFragmentView
 
 interface ProjectFragmentView: BaseFragmentView {

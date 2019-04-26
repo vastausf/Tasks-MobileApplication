@@ -6,15 +6,16 @@ import android.view.View
 import android.view.ViewGroup
 import com.vastausf.tasks.R
 import com.vastausf.tasks.model.api.tasksApiData.ProjectDataFull
+import com.vastausf.tasks.model.api.tasksApiData.ProjectDataShort
 import kotlinx.android.synthetic.main.item_project.view.*
 
 class ProjectsAdapter(
     val listener: ProjectListener,
-    private val itemList: List<ProjectDataFull>
+    private val itemList: List<ProjectDataShort>
 ) : RecyclerView.Adapter<ProjectsAdapter.ViewHolder>() {
 
     interface ProjectListener {
-        fun onProjectClick(projectDataFull: ProjectDataFull)
+        fun onProjectClick(projectData: ProjectDataShort)
         fun onLoadLast()
     }
 
@@ -37,7 +38,7 @@ class ProjectsAdapter(
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-        fun bind(item: ProjectDataFull) {
+        fun bind(item: ProjectDataShort) {
             itemView.tvTitle.text = item.title
             itemView.tvDescription.text = item.description
 

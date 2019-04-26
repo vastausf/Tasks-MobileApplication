@@ -1,11 +1,11 @@
 package com.vastausf.tasks.model.api.tasksApiData
 
-data class AuthTokenGetO(
+data class AuthTokenGetS(
     val login: String,
     val password: String
 )
 
-data class AuthTokenGetI(
+data class AuthTokenGetC(
     val token: String
 )
 

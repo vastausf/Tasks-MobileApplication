@@ -8,22 +8,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.vastausf.tasks.R
-import com.vastausf.tasks.model.api.tasksApiData.UserData
-import kotlinx.android.synthetic.main.item_user.view.*
+import com.vastausf.tasks.model.api.tasksApiData.TaskDataFull
+import kotlinx.android.synthetic.main.item_task.view.*
 
-class UsersAdapter(
-    private val itemList: List<UserData>
-) : RecyclerView.Adapter<UsersAdapter.ViewHolder>() {
+class TasksAdapter(
+    private val itemList: List<TaskDataFull>
+) : RecyclerView.Adapter<TasksAdapter.ViewHolder>() {
 
-    var listener: UserListener? = null
+    var listener: TaskListener? = null
 
-    interface UserListener {
-        fun onUserClick(userData: UserData)
+    interface TaskListener {
+        fun onTaskClick(taskData: TaskDataFull)
     }
 
     override fun onCreateViewHolder(container: ViewGroup, layoutType: Int): ViewHolder {
         return ViewHolder(
-            LayoutInflater.from(container.context).inflate(R.layout.item_user, container, false)
+            LayoutInflater.from(container.context).inflate(R.layout.item_task, container, false)
         )
     }
 
@@ -37,12 +37,13 @@ class UsersAdapter(
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-        fun bind(item: UserData) {
-            itemView.tvName.text = "${item.firstName} ${item.lastName}"
-            itemView.tvMail.text = item.email
+        fun bind(item: TaskDataFull) {
+            itemView.tvTitle.text = item.title
+            itemView.tvStatus.text = item.status.toString()
+            itemView.tvDescription.text = item.description
 
             itemView.setOnClickListener {
-                listener?.onUserClick(item)
+                listener?.onTaskClick(item)
             }
         }
 

@@ -5,7 +5,7 @@ import com.vastausf.tasks.R
 import com.vastausf.tasks.model.TasksDataStore
 import com.vastausf.tasks.model.api.TasksApiClient
 import com.vastausf.tasks.model.api.TasksTokenStore
-import com.vastausf.tasks.model.api.tasksApiData.AuthTokenGetI
+import com.vastausf.tasks.model.api.tasksApiData.AuthTokenGetC
 import com.vastausf.tasks.presentation.fragment.base.BaseFragmentPresenter
 import com.vastausf.tasks.presentation.fragment.main.MainFragment
 import com.vastausf.tasks.utils.HttpStatusCode
@@ -42,7 +42,7 @@ constructor(
         }
     }
 
-    private fun onLoginSuccess(data: AuthTokenGetI) {
+    private fun onLoginSuccess(data: AuthTokenGetC) {
         tasksTokenStore.accessToken = data.token
 
         viewState.launchFragment(MainFragment())

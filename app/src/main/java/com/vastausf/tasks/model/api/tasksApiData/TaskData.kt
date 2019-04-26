@@ -1,39 +1,50 @@
 package com.vastausf.tasks.model.api.tasksApiData
 
-data class TaskNewO(
+data class TaskNewS(
     val data: TaskDataCreate
 )
 
-data class TaskNewI(
+data class TaskNewC(
     val data: TaskDataFull
 )
 
-data class TaskEditO(
+data class TaskEditS(
     val id: Int,
     val newData: TaskDataEdit
 )
 
-data class TaskEditI(
+data class TaskEditC(
     val newData: TaskDataFull
 )
 
-data class TaskStatusEditO(
+data class TaskStatusEditS(
     val id: Int,
     val newStatus: Int,
     val comment: String
 )
 
-data class TaskStatusEditI(
+data class TaskStatusEditC(
     val data: TaskDataFull
+)
+
+data class TaskFindS(
+    val offset: Int,
+    val limit: Int,
+    val parameters: TaskDataSearch
+)
+
+data class TaskFindC(
+    val data: List<TaskDataFull>
 )
 
 
 data class TaskData(
+    val id: Int,
     val project: Int,
     val title: String,
     val status: Int,
-    val created: Int,
-    val assigned: Int,
+    val creatorId: UserData,
+    val assignId: UserData,
     val description: String,
     val documents: List<String>
 )
@@ -48,15 +59,25 @@ data class TaskDataCreate(
 
 data class TaskDataFull(
     val id: Int,
-    val project: Int,
+    val projectId: Int,
     val title: String,
     val status: Int,
-    val created: Int,
-    val assigned: Int,
+    val creatorId: UserData,
+    val assignId: UserData,
     val description: String,
     val time: Long,
     val documents: List<String>,
     val history: List<HistoryItem>
+)
+
+data class TaskDataShort(
+    val id: Int,
+    val title: String,
+    val status: Int,
+    val creatorId: UserData,
+    val assignId: UserData,
+    val description: String,
+    val time: Long
 )
 
 data class TaskDataEdit(
@@ -64,6 +85,15 @@ data class TaskDataEdit(
     val assigned: Int? = null,
     val description: String? = null,
     val documents: List<String>? = null
+)
+
+data class TaskDataSearch(
+    val ids: List<Int>? = null,
+    val title: String? = null,
+    val creatorId: List<Int>? = null,
+    val assignId: List<Int>? = null,
+    val description: String? = null,
+    val projectId: List<Int>? = null
 )
 
 data class HistoryItem(

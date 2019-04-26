@@ -9,27 +9,31 @@ import android.view.ViewGroup
 import com.vastausf.tasks.R
 import com.vastausf.tasks.model.api.tasksApiData.UserData
 import com.vastausf.tasks.presentation.adapter.UsersAdapter
-import kotlinx.android.synthetic.main.fragment_project_users.view.*
+import kotlinx.android.synthetic.main.fragment_project_users.*
 
 class FragmentUsers : Fragment() {
 
     private val userList = mutableListOf<UserData>()
 
-    fun bindUsers(listener: UsersAdapter.UserListener, users: List<UserData>) {
+    lateinit var usersAdapter: UsersAdapter
+
+    fun bindUsers(users: List<UserData>) {
         userList.clear()
         userList.addAll(users)
-
-        view?.rvUsers?.apply {
-            adapter = UsersAdapter(listener, userList)
-            layoutManager = LinearLayoutManager(this.context)
-            adapter?.notifyDataSetChanged()
-        }
+        usersAdapter.notifyDataSetChanged()
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_project_users, container, false)
+        return inflater.inflate(R.layout.fragment_project_users, container, false)
+    }
 
-        return view
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        usersAdapter = UsersAdapter(userList)
+        usersAdapter.listener = parentFragment as UsersAdapter.UserListener
+
+        rvUsers.adapter = usersAdapter
+        rvUsers.layoutManager = LinearLayoutManager(this.context)
     }
 
 }

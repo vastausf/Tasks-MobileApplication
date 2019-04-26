@@ -1,30 +1,38 @@
 package com.vastausf.tasks.model.api.tasksApiData
 
-data class ProjectNewO(
+data class ProjectNewS(
     val data: ProjectDataCreate
 )
 
-data class ProjectNewI(
-    val data: ProjectDataFull
+data class ProjectNewC(
+    val data: ProjectDataShort
 )
 
-data class ProjectEditO(
+data class ProjectEditS(
     val id: Int,
     val newData: ProjectDataEdit
 )
 
-data class ProjectEditI(
-    val data: ProjectDataFull
+data class ProjectEditC(
+    val data: ProjectDataShort
 )
 
-data class ProjectFindO(
+data class ProjectFindS(
     val offset: Int,
     val limit: Int,
     val parameters: ProjectDataSearch
 )
 
-data class ProjectFindI(
-    val data: List<ProjectDataFull>
+data class ProjectFindC(
+    val data: List<ProjectDataShort>
+)
+
+data class ProjectDataFullS(
+    val projectId: Int
+)
+
+data class ProjectDataFullC(
+    val data: ProjectDataFull
 )
 
 data class ProjectData(
@@ -50,8 +58,17 @@ data class ProjectDataFull(
     val specification: String,
     val documents: List<String>,
     val credentials: List<UserData>,
+    val created: Int,
+    val tasks: List<TaskDataFull>
+)
+
+data class ProjectDataShort(
+    val id: Int,
+    val title: String,
+    val description: String,
     val created: Int
 )
+
 
 data class ProjectDataEdit(
     val title: String? = null,

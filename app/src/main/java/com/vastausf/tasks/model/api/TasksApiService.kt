@@ -11,56 +11,70 @@ interface TasksApiService {
     @POST("auth/token/get")
     fun authTokenGet(
         @Header("ContentType") contentType: String,
-        @Body body: AuthTokenGetO
-    ): Single<AuthTokenGetI>
+        @Body body: AuthTokenGetS
+    ): Single<AuthTokenGetC>
 
     @POST("user/find")
     fun userFind(
         @Header("ContentType") contentType: String,
         @Header("AccessToken") accessToken: String,
-        @Body body: UserFindO
-    ): Single<UserFindI>
+        @Body body: UserFindS
+    ): Single<UserFindC>
 
     @POST("project/new")
     fun projectNew(
         @Header("ContentType") contentType: String,
         @Header("AccessToken") accessToken: String,
-        @Body body: ProjectNewO
-    ): Single<ProjectNewI>
+        @Body body: ProjectNewS
+    ): Single<ProjectNewC>
 
     @POST("project/edit")
     fun projectEdit(
         @Header("ContentType") contentType: String,
         @Header("AccessToken") accessToken: String,
-        @Body body: ProjectEditO
-    ): Single<ProjectEditI>
+        @Body body: ProjectEditS
+    ): Single<ProjectEditC>
 
     @POST("project/find")
     fun projectFind(
         @Header("ContentType") contentType: String,
         @Header("AccessToken") accessToken: String,
-        @Body body: ProjectFindO
-    ): Single<ProjectFindI>
+        @Body body: ProjectFindS
+    ): Single<ProjectFindC>
+
+    @POST("project/fullData")
+    fun projectFullData(
+        @Header("ContentType") contentType: String,
+        @Header("AccessToken") accessToken: String,
+        @Body body: ProjectDataFullS
+    ): Single<ProjectDataFullC>
 
     @POST("task/new")
     fun taskNew(
         @Header("ContentType") contentType: String,
         @Header("AccessToken") accessToken: String,
-        @Body body: TaskNewO
-    ): Single<TaskNewI>
+        @Body body: TaskNewS
+    ): Single<TaskNewC>
 
     @POST("task/edit")
     fun taskEdit(
         @Header("ContentType") contentType: String,
         @Header("AccessToken") accessToken: String,
-        @Body body: TaskEditO
-    ): Single<TaskEditI>
+        @Body body: TaskEditS
+    ): Single<TaskEditC>
 
     @POST("task/status/edit")
     fun taskStatusEdit(
         @Header("ContentType") contentType: String,
         @Header("AccessToken") accessToken: String,
-        @Body body: TaskStatusEditO
-    ): Single<TaskStatusEditI>
+        @Body body: TaskStatusEditS
+    ): Single<TaskStatusEditC>
+
+    @POST("project/find")
+    fun taskFind(
+        @Header("ContentType") contentType: String,
+        @Header("AccessToken") accessToken: String,
+        @Body body: TaskFindS
+    ): Single<TaskFindC>
 
 }

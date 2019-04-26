@@ -9,7 +9,7 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.vastausf.tasks.R
 import com.vastausf.tasks.di.fragment.DaggerFragmentComponent
-import com.vastausf.tasks.model.api.tasksApiData.ProjectDataFull
+import com.vastausf.tasks.model.api.tasksApiData.ProjectDataShort
 import com.vastausf.tasks.presentation.adapter.ProjectsAdapter
 import com.vastausf.tasks.presentation.fragment.base.BaseFragment
 import com.vastausf.tasks.presentation.fragment.project.ProjectFragment
@@ -24,9 +24,9 @@ class MainFragment : BaseFragment(), MainFragmentView, ProjectsAdapter.ProjectLi
     @field:InjectPresenter
     lateinit var presenter: MainFragmentPresenter
 
-    private val projectList = mutableListOf<ProjectDataFull>()
+    private val projectList = mutableListOf<ProjectDataShort>()
 
-    override fun bindProjectList(data: List<ProjectDataFull>, clean: Boolean) {
+    override fun bindProjectList(data: List<ProjectDataShort>, clean: Boolean) {
         view?.rvProjects?.adapter?.let {
             val itemCount = it.itemCount
 
@@ -53,9 +53,9 @@ class MainFragment : BaseFragment(), MainFragmentView, ProjectsAdapter.ProjectLi
         }
     }
 
-    override fun onProjectClick(projectDataFull: ProjectDataFull) {
-        launchFragment(ProjectFragment(),bundle = Bundle().apply {
-            putInt("projectId", projectDataFull.id)
+    override fun onProjectClick(projectData: ProjectDataShort) {
+        launchFragment(ProjectFragment(), bundle = Bundle().apply {
+            putInt("projectId", projectData.id)
         })
     }
 

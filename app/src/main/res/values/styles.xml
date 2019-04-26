@@ -37,6 +37,11 @@
         <item name="android:textStyle">bold</item>
     </style>
 
+    <style name="TextHint" parent="AppTheme">
+        <item name="android:textColor">@color/colorHint</item>
+        <item name="android:textSize">@dimen/font_size_normal</item>
+    </style>
+
     <style name="Separator" parent="AppTheme">
         <item name="android:background">@color/colorPlaceholder</item>
         <item name="android:layout_width">match_parent</item>

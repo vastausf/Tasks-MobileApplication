@@ -9,9 +9,11 @@ import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.vastausf.tasks.R
 import com.vastausf.tasks.di.fragment.DaggerFragmentComponent
 import com.vastausf.tasks.model.api.tasksApiData.ProjectDataFull
+import com.vastausf.tasks.model.api.tasksApiData.TaskData
+import com.vastausf.tasks.model.api.tasksApiData.TaskDataFull
 import com.vastausf.tasks.model.api.tasksApiData.UserData
 import com.vastausf.tasks.presentation.adapter.ProjectPagerAdapter
-import com.vastausf.tasks.presentation.adapter.ProjectsAdapter
+import com.vastausf.tasks.presentation.adapter.TasksAdapter
 import com.vastausf.tasks.presentation.adapter.UsersAdapter
 import com.vastausf.tasks.presentation.adapter.pages.FragmentProjectMain
 import com.vastausf.tasks.presentation.fragment.base.BaseFragment
@@ -20,7 +22,7 @@ import kotlinx.android.synthetic.main.fragment_project_main.*
 import kotlinx.android.synthetic.main.fragment_project_main.view.*
 import javax.inject.Inject
 
-class ProjectFragment : BaseFragment(), ProjectFragmentView, UsersAdapter.UserListener, FragmentProjectMain.ProjectListener{
+class ProjectFragment : BaseFragment(), ProjectFragmentView, UsersAdapter.UserListener, FragmentProjectMain.ProjectListener, TasksAdapter.TaskListener {
 
     @Inject
     @get:ProvidePresenter
@@ -39,24 +41,34 @@ class ProjectFragment : BaseFragment(), ProjectFragmentView, UsersAdapter.UserLi
         showToast(userData)
     }
 
+    override fun onTaskClick(taskData: TaskDataFull) {
+        showToast(taskData)
+    }
+
     override fun onReload() {
         presenter.loadProjectData(arguments?.getInt("projectId"))
     }
 
     override fun bindProjectData(projectDataFull: ProjectDataFull) {
         view?.apply {
-            projectAdapter.main.tvTitle?.apply {
-                background = null
-                text = projectDataFull.title
-            }
+            projectAdapter.main.apply {
+                tvTitle?.apply {
+                    background = null
+                    text = projectDataFull.title
+                }
 
-            projectAdapter.main.tvDescription?.apply {
-                setBackgroundColor(context.getColor(R.color.colorTransparent))
-                text = projectDataFull.description
+                tvDescription?.apply {
+                    setBackgroundColor(context.getColor(R.color.colorTransparent))
+                    text = projectDataFull.description
+                }
             }
 
             projectAdapter.users.apply {
-                bindUsers(this@ProjectFragment, projectDataFull.credentials)
+                bindUsers(projectDataFull.credentials)
+            }
+
+            projectAdapter.tasks.apply {
+                bindTasks(projectDataFull.tasks)
             }
         }
     }
