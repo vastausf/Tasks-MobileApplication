@@ -38,6 +38,7 @@ dependencies {
     implementation "com.android.support:recyclerview-v7:$support_version"
     implementation "com.android.support:design:$support_version"
 
+
     //moxy
     kapt "com.arello-mobile:moxy-compiler:$moxy_version"
     implementation "com.arello-mobile:moxy:$moxy_version"

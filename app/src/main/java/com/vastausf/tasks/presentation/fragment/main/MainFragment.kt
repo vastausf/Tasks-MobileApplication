@@ -71,6 +71,10 @@ class MainFragment : BaseFragment(), MainFragmentView, ProjectsAdapter.ProjectLi
             presenter.loadProjects(0, resources.getInteger(R.integer.load_items))
         }
 
+        view.fabNewProject.setOnClickListener {
+            presenter.onNewProjectClick()
+        }
+
         return view
     }
 

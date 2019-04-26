@@ -10,5 +10,11 @@
 
     <string name="error">error</string>
 
+    <string name="add">add</string>
+
     <string name="heres_nothing">here\'s nothing</string>
+    <string name="title">title</string>
+    <string name="description">description</string>
+    <string name="documents">documents</string>
+    <string name="specification">specification</string>
 </resources>

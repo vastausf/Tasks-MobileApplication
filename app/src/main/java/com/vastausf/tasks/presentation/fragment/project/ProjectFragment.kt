@@ -1,5 +1,8 @@
 package com.vastausf.tasks.presentation.fragment.project
 
+import android.app.AlertDialog
+import android.app.Dialog
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -29,6 +32,8 @@ class ProjectFragment : BaseFragment(), ProjectFragmentView, UsersAdapter.UserLi
     @field:InjectPresenter
     lateinit var presenter: ProjectFragmentPresenter
 
+    private var projectData: ProjectDataFull? = null
+
     private lateinit var projectAdapter: ProjectPagerAdapter
 
     override fun projectLoadStatus(status: Boolean) {
@@ -49,7 +54,24 @@ class ProjectFragment : BaseFragment(), ProjectFragmentView, UsersAdapter.UserLi
         presenter.loadProjectData(arguments?.getInt("projectId"))
     }
 
+    override fun onDocumentsClick() {
+        projectData?.apply {
+            AlertDialog
+                .Builder(this@ProjectFragment.context)
+                .setItems(documents.toTypedArray()) { dialog, which ->
+                    showToast(documents[which])
+                }
+                .create()
+                .show()
+        }
+    }
+
+    override fun onSpecificationClick() {
+
+    }
+
     override fun bindProjectData(projectDataFull: ProjectDataFull) {
+        projectData = projectDataFull
         view?.apply {
             projectAdapter.main.apply {
                 tvTitle?.apply {

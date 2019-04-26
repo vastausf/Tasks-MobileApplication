@@ -13,15 +13,29 @@ class FragmentProjectMain: Fragment() {
 
     interface ProjectListener {
         fun onReload()
+
+        fun onDocumentsClick()
+
+        fun onSpecificationClick()
     }
 
     lateinit var listener: ProjectListener
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_project_main, container, false)
+
         view.srlProject.setOnRefreshListener {
             listener.onReload()
         }
+
+        view.bDocuments.setOnClickListener {
+            listener.onDocumentsClick()
+        }
+
+        view.bSpecification.setOnClickListener {
+            listener.onSpecificationClick()
+        }
+
         return view
     }
 

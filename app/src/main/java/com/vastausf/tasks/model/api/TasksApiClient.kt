@@ -45,4 +45,12 @@ constructor(
         )
     }
 
+    fun createNewProject(data: ProjectDataCreate): Single<ProjectNewC> {
+        return tasksApiService.projectNew(
+            contentType,
+            tasksTokenStore.accessToken,
+            ProjectNewS(data)
+        )
+    }
+
 }
