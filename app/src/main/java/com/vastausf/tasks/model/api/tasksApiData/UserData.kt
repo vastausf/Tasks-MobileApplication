@@ -32,7 +32,5 @@ data class UserDataFull(
 data class UserDataSearch(
     val ids: List<Int>? = null,
     val email: String? = null,
-    val lastName: String? = null,
-    val firstName: String? = null,
-    val middleName: String? = null
+    val name: String? = null
 )

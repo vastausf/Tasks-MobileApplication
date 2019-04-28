@@ -38,9 +38,9 @@ class TasksAdapter(
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         fun bind(item: TaskDataFull) {
-            itemView.tvTitle.text = item.title
+            itemView.etTitle.text = item.title
             itemView.tvStatus.text = item.status.toString()
-            itemView.tvDescription.text = item.description
+            itemView.etDescription.text = item.description
 
             itemView.setOnClickListener {
                 listener?.onTaskClick(item)

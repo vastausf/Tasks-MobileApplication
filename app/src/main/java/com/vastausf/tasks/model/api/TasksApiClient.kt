@@ -53,4 +53,24 @@ constructor(
         )
     }
 
+    fun editProject(id: Int, data: ProjectDataEdit): Single<ProjectEditC> {
+        return tasksApiService.projectEdit(
+            contentType,
+            tasksTokenStore.accessToken,
+            ProjectEditS(id, data)
+        )
+    }
+
+    fun getUserList(offset: Int, limit: Int, parameters: UserDataSearch): Single<UserFindC> {
+        return tasksApiService.userFind(
+            contentType,
+            tasksTokenStore.accessToken,
+            UserFindS(
+                offset,
+                limit,
+                parameters
+            )
+        )
+    }
+
 }

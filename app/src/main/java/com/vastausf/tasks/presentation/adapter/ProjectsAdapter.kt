@@ -5,7 +5,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.vastausf.tasks.R
-import com.vastausf.tasks.model.api.tasksApiData.ProjectDataFull
 import com.vastausf.tasks.model.api.tasksApiData.ProjectDataShort
 import kotlinx.android.synthetic.main.item_project.view.*
 
@@ -39,8 +38,8 @@ class ProjectsAdapter(
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         fun bind(item: ProjectDataShort) {
-            itemView.tvTitle.text = item.title
-            itemView.tvDescription.text = item.description
+            itemView.etTitle.text = item.title
+            itemView.etDescription.text = item.description
 
             itemView.setOnClickListener {
                 listener.onProjectClick(item)

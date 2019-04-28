@@ -1,9 +1,8 @@
 package com.vastausf.tasks.presentation.fragment.project
 
 import android.app.AlertDialog
-import android.app.Dialog
-import android.content.DialogInterface
 import android.os.Bundle
+import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,100 +10,21 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.vastausf.tasks.R
 import com.vastausf.tasks.di.fragment.DaggerFragmentComponent
-import com.vastausf.tasks.model.api.tasksApiData.ProjectDataFull
-import com.vastausf.tasks.model.api.tasksApiData.TaskData
-import com.vastausf.tasks.model.api.tasksApiData.TaskDataFull
-import com.vastausf.tasks.model.api.tasksApiData.UserData
-import com.vastausf.tasks.presentation.adapter.ProjectPagerAdapter
-import com.vastausf.tasks.presentation.adapter.TasksAdapter
 import com.vastausf.tasks.presentation.adapter.UsersAdapter
-import com.vastausf.tasks.presentation.adapter.pages.FragmentProjectMain
 import com.vastausf.tasks.presentation.fragment.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_project.view.*
-import kotlinx.android.synthetic.main.fragment_project_main.*
-import kotlinx.android.synthetic.main.fragment_project_main.view.*
 import javax.inject.Inject
 
-class ProjectFragment : BaseFragment(), ProjectFragmentView, UsersAdapter.UserListener, FragmentProjectMain.ProjectListener, TasksAdapter.TaskListener {
-
+class ProjectFragment : BaseFragment(), ProjectFragmentView {
     @Inject
     @get:ProvidePresenter
     @field:InjectPresenter
     lateinit var presenter: ProjectFragmentPresenter
 
-    private var projectData: ProjectDataFull? = null
-
-    private lateinit var projectAdapter: ProjectPagerAdapter
-
-    override fun projectLoadStatus(status: Boolean) {
-        view?.apply {
-            projectAdapter.main.view?.srlProject?.isRefreshing = status
-        }
-    }
-
-    override fun onUserClick(userData: UserData) {
-        showToast(userData)
-    }
-
-    override fun onTaskClick(taskData: TaskDataFull) {
-        showToast(taskData)
-    }
-
-    override fun onReload() {
-        presenter.loadProjectData(arguments?.getInt("projectId"))
-    }
-
-    override fun onDocumentsClick() {
-        projectData?.apply {
-            AlertDialog
-                .Builder(this@ProjectFragment.context)
-                .setItems(documents.toTypedArray()) { dialog, which ->
-                    showToast(documents[which])
-                }
-                .create()
-                .show()
-        }
-    }
-
-    override fun onSpecificationClick() {
-
-    }
-
-    override fun bindProjectData(projectDataFull: ProjectDataFull) {
-        projectData = projectDataFull
-        view?.apply {
-            projectAdapter.main.apply {
-                tvTitle?.apply {
-                    background = null
-                    text = projectDataFull.title
-                }
-
-                tvDescription?.apply {
-                    setBackgroundColor(context.getColor(R.color.colorTransparent))
-                    text = projectDataFull.description
-                }
-            }
-
-            projectAdapter.users.apply {
-                bindUsers(projectDataFull.credentials)
-            }
-
-            projectAdapter.tasks.apply {
-                bindTasks(projectDataFull.tasks)
-            }
-        }
-    }
-
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = inflater.inflate(R.layout.fragment_project, container, false)
-        projectAdapter = ProjectPagerAdapter(childFragmentManager)
+        presenter.projectId = arguments?.getInt("projectId") ?: 0
 
-        view.apply {
-            vpProject.apply {
-                adapter = projectAdapter
-                currentItem = 1
-            }
-        }
+        val view = inflater.inflate(R.layout.fragment_project, container, false)
 
         return view
     }
@@ -120,10 +40,45 @@ class ProjectFragment : BaseFragment(), ProjectFragmentView, UsersAdapter.UserLi
         super.onCreate(savedInstanceState)
     }
 
+    override fun bindProjectData() {
+        view?.apply {
+            bDocuments.setOnClickListener {
+                AlertDialog
+                    .Builder(context)
+                    .setItems(presenter.projectData.documents.toTypedArray()) { dialog, which ->
+                        showToast(presenter.projectData.documents[which])
+                    }
+                    .create()
+                    .show()
+            }
+
+            bSpecification.setOnClickListener {
+                showToast(presenter.projectData.specification)
+            }
+
+            etTitle.setText(presenter.projectData.title)
+
+            etDescription.setText(presenter.projectData.description)
+
+            rvUsers.apply {
+                val usersAdapter = UsersAdapter(presenter.projectData.credentials)
+
+                adapter = usersAdapter
+                layoutManager = LinearLayoutManager(context)
+            }
+        }
+    }
+
+    override fun loadStatus(status: Boolean) {
+        view?.apply {
+            srlProject.isRefreshing = status
+        }
+    }
+
     override fun onStart() {
         super.onStart()
 
-        presenter.loadProjectData(arguments?.getInt("projectId"))
+        presenter.loadProjectData()
     }
 
 }

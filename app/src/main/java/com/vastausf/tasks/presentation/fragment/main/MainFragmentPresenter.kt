@@ -7,7 +7,6 @@ import com.vastausf.tasks.model.api.TasksApiClient
 import com.vastausf.tasks.model.api.tasksApiData.ProjectDataSearch
 import com.vastausf.tasks.model.api.tasksApiData.ProjectFindC
 import com.vastausf.tasks.presentation.fragment.base.BaseFragmentPresenter
-import com.vastausf.tasks.presentation.fragment.newProject.NewProjectFragment
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import retrofit2.HttpException
@@ -64,7 +63,7 @@ constructor(
     }
 
     fun onNewProjectClick() {
-        viewState.launchFragment(NewProjectFragment())
+
     }
 
 }

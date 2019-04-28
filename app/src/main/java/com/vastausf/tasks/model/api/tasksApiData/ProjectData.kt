@@ -52,14 +52,14 @@ data class ProjectDataCreate(
 )
 
 data class ProjectDataFull(
-    val id: Int,
-    val title: String,
-    val description: String,
-    val specification: String,
-    val documents: List<String>,
-    val credentials: List<UserData>,
-    val created: Int,
-    val tasks: List<TaskDataFull>
+    var id: Int,
+    var title: String,
+    var description: String,
+    var specification: String,
+    var documents: List<String>,
+    var credentials: List<UserData>,
+    var created: Int,
+    var tasks: List<TaskDataFull>
 )
 
 data class ProjectDataShort(

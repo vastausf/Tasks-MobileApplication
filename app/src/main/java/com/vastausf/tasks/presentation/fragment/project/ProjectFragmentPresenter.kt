@@ -3,7 +3,7 @@ package com.vastausf.tasks.presentation.fragment.project
 import com.arellomobile.mvp.InjectViewState
 import com.vastausf.tasks.R
 import com.vastausf.tasks.model.api.TasksApiClient
-import com.vastausf.tasks.model.api.tasksApiData.ProjectDataFullC
+import com.vastausf.tasks.model.api.tasksApiData.*
 import com.vastausf.tasks.presentation.fragment.base.BaseFragmentPresenter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -15,31 +15,54 @@ class ProjectFragmentPresenter
 constructor(
     private val tasksApiClient: TasksApiClient
 ) : BaseFragmentPresenter<ProjectFragmentView>() {
+    var projectId: Int = 0
 
-    fun loadProjectData(projectId: Int?) {
-        if (projectId == null) {
-            viewState.showToast(R.string.error)
-            viewState.goBack()
-        } else {
-            viewState.projectLoadStatus(true)
+    lateinit var projectData: ProjectDataFull
 
-            tasksApiClient
-                .getProjectFullData(projectId)
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .doFinally {
-                    viewState.projectLoadStatus(false)
-                }
-                .subscribe(this::onLoadProjectDataSuccess, this::onLoadProjectDataError)
-                .unsubscribeOnDestroy()
-        }
+    fun loadProjectData() {
+        viewState.loadStatus(true)
+
+        tasksApiClient
+            .getProjectFullData(projectId)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doFinally {
+                viewState.loadStatus(false)
+            }
+            .subscribe(this::onLoadProjectDataSuccess, this::onLoadProjectDataError)
+            .unsubscribeOnDestroy()
     }
 
     private fun onLoadProjectDataSuccess(data: ProjectDataFullC) {
-        viewState.bindProjectData(data.data)
+        projectData = data.data
+
+        viewState.bindProjectData()
     }
 
     private fun onLoadProjectDataError(error: Throwable) {
+        viewState.showToast(R.string.error)
+        error.printStackTrace()
+    }
+
+    private fun editProjectData(id: Int, projectDataEdit: ProjectDataEdit) {
+        viewState.loadStatus(true)
+
+        tasksApiClient
+            .editProject(id, projectDataEdit)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doFinally {
+                viewState.loadStatus(false)
+            }
+            .subscribe(this::onEditProjectDataSuccess, this::onEditProjectDataError)
+            .unsubscribeOnDestroy()
+    }
+
+    private fun onEditProjectDataSuccess(data: ProjectEditC) {
+        loadProjectData()
+    }
+
+    private fun onEditProjectDataError(error: Throwable) {
         viewState.showToast(R.string.error)
         error.printStackTrace()
     }

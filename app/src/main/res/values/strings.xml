@@ -17,4 +17,13 @@
     <string name="description">description</string>
     <string name="documents">documents</string>
     <string name="specification">specification</string>
+    <string name="save">save</string>
+    <string name="document_url">document url</string>
+    <string name="edit">edit</string>
+    <string name="delete">delete</string>
+    <string name="name">name</string>
+    <string name="choose_user">choose user</string>
+    <string name="first_name">first name</string>
+    <string name="last_name">last name</string>
+    <string name="tag_fragment_project_task_list">tag_fragment_project_task_list</string>
 </resources>
