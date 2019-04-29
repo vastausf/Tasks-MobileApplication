@@ -28,6 +28,7 @@
 
     <style name="EditText.WithoutUnderline" parent="EditText">
         <item name="android:background">@color/colorTransparent</item>
+        <item name="android:layout_margin">@dimen/spacing_normal</item>
     </style>
 
     <style name="ButtonAccent" parent="AppTheme">
@@ -70,8 +71,8 @@
         <item name="android:layout_height">@dimen/view_size_x_tiny</item>
         <item name="android:layout_marginLeft">@dimen/spacing_xx_large</item>
         <item name="android:layout_marginRight">@dimen/spacing_xx_large</item>
-        <item name="android:layout_marginTop">@dimen/spacing_xx_small</item>
-        <item name="android:layout_marginBottom">@dimen/spacing_xx_small</item>
+        <item name="android:layout_marginTop">@dimen/spacing_xxx_small</item>
+        <item name="android:layout_marginBottom">@dimen/spacing_xxx_small</item>
     </style>
 
 </resources>

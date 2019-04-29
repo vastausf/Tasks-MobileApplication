@@ -28,8 +28,6 @@ data class TaskStatusEditC(
 )
 
 data class TaskFindS(
-    val offset: Int,
-    val limit: Int,
     val parameters: TaskDataSearch
 )
 

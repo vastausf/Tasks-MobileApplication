@@ -1,19 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_height="match_parent"
-    android:layout_width="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/srlProject"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent">
+        app:layout_constraintTop_toTopOf="parent">
 
         <ScrollView
             android:layout_width="match_parent"
@@ -30,7 +28,6 @@
                     style="@style/EditText.WithoutUnderline"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_margin="@dimen/spacing_large"
                     android:enabled="false"
                     android:hint="@string/title"
                     android:inputType="textCapCharacters"
@@ -53,13 +50,23 @@
                         android:text="@string/documents" />
 
                     <Button
-                        android:id="@+id/bSpecification"
+                        android:id="@+id/bCredentials"
                         style="@style/ButtonSimple"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:text="@string/specification" />
+                        android:text="@string/credentials" />
                 </LinearLayout>
+
+                <View style="@style/Separator" />
+
+                <EditText
+                    android:id="@+id/etSpecification"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/specification"
+                    android:enabled="false"
+                    style="@style/EditText.WithoutUnderline"/>
 
                 <View style="@style/Separator" />
 
@@ -68,18 +75,10 @@
                     style="@style/EditText.WithoutUnderline"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:layout_margin="@dimen/spacing_normal"
                     android:enabled="false"
                     android:hint="@string/description"
                     android:textAlignment="textStart"
                     android:textSize="@dimen/font_size_normal" />
-
-                <View style="@style/Separator"/>
-
-                <android.support.v7.widget.RecyclerView
-                    android:id="@+id/rvUsers"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent" />
             </LinearLayout>
 
         </ScrollView>

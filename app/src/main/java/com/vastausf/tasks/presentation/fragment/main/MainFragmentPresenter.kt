@@ -4,8 +4,7 @@ import com.arellomobile.mvp.InjectViewState
 import com.vastausf.tasks.R
 import com.vastausf.tasks.TasksApplication
 import com.vastausf.tasks.model.api.TasksApiClient
-import com.vastausf.tasks.model.api.tasksApiData.ProjectDataSearch
-import com.vastausf.tasks.model.api.tasksApiData.ProjectFindC
+import com.vastausf.tasks.model.api.tasksApiData.*
 import com.vastausf.tasks.presentation.fragment.base.BaseFragmentPresenter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -20,34 +19,32 @@ constructor(
     private val tasksApiClient: TasksApiClient
 ) : BaseFragmentPresenter<MainFragmentView>() {
 
+    val projectList = mutableListOf<ProjectDataShort>()
+
     fun loadProjects(
-        offset: Int,
-        limit: Int,
-        parameters: ProjectDataSearch = ProjectDataSearch(),
-        clean: Boolean = true
+        parameters: ProjectDataSearch = ProjectDataSearch()
     ) {
         viewState.projectsLoadStatus(true)
 
         tasksApiClient
-            .getProjectList(offset, limit, parameters)
+            .getProjectList(parameters)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doFinally {
                 viewState.projectsLoadStatus(false)
             }
             .subscribe(
-                if (clean) this::onLoadProjectsSuccessClean else this::onLoadProjectsSuccess,
+                this::onLoadProjectsSuccess,
                 this::onLoadProjectsError
             )
             .unsubscribeOnDestroy()
     }
 
     private fun onLoadProjectsSuccess(data: ProjectFindC) {
-        viewState.bindProjectList(data.data, false)
-    }
+        projectList.clear()
+        projectList.addAll(data.data)
 
-    private fun onLoadProjectsSuccessClean(data: ProjectFindC) {
-        viewState.bindProjectList(data.data, true)
+        viewState.bindProjectList(data.data)
     }
 
     private fun onLoadProjectsError(error: Throwable) {
@@ -62,8 +59,37 @@ constructor(
         }
     }
 
-    fun onNewProjectClick() {
+    fun createProject(title: String) {
+        viewState.projectsLoadStatus(true)
 
+        tasksApiClient
+            .createNewProject(ProjectDataCreate(title, "", "", listOf(), listOf()))
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doFinally {
+                viewState.projectsLoadStatus(false)
+            }
+            .subscribe(
+                this::onCreateProjectSuccess,
+                this::onCreateProjectError
+            )
+            .unsubscribeOnDestroy()
+    }
+
+    private fun onCreateProjectSuccess(data: ProjectNewC) {
+        loadProjects()
+    }
+
+    private fun onCreateProjectError(error: Throwable) {
+        when (error) {
+            is HttpException -> viewState.showToast(error.code())
+
+            else -> {
+                viewState.showToast(error::class.java.name)
+                viewState.showToast(R.string.error)
+                error.printStackTrace()
+            }
+        }
     }
 
 }

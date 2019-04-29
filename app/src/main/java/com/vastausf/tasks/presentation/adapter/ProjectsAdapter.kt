@@ -15,7 +15,6 @@ class ProjectsAdapter(
 
     interface ProjectListener {
         fun onProjectClick(projectData: ProjectDataShort)
-        fun onLoadLast()
     }
 
     override fun onCreateViewHolder(container: ViewGroup, layoutType: Int): ViewHolder {
@@ -29,9 +28,6 @@ class ProjectsAdapter(
     }
 
     override fun onBindViewHolder(viewHolder: ViewHolder, position: Int) {
-        if (itemList.size - 1 == position) {
-            listener.onLoadLast()
-        }
         viewHolder.bind(itemList[position])
     }
 

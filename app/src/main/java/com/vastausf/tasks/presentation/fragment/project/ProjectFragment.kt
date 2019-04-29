@@ -2,7 +2,6 @@ package com.vastausf.tasks.presentation.fragment.project
 
 import android.app.AlertDialog
 import android.os.Bundle
-import android.support.v7.widget.LinearLayoutManager
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -10,7 +9,6 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.vastausf.tasks.R
 import com.vastausf.tasks.di.fragment.DaggerFragmentComponent
-import com.vastausf.tasks.presentation.adapter.UsersAdapter
 import com.vastausf.tasks.presentation.fragment.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_project.view.*
 import javax.inject.Inject
@@ -52,19 +50,26 @@ class ProjectFragment : BaseFragment(), ProjectFragmentView {
                     .show()
             }
 
-            bSpecification.setOnClickListener {
-                showToast(presenter.projectData.specification)
+            bCredentials.setOnClickListener {
+                AlertDialog
+                    .Builder(context)
+                    .setItems(presenter.projectData.credentials.map {
+                        "${it.firstName} ${it.lastName}"
+                    }.toTypedArray()) { dialog, which ->
+                        showToast(presenter.projectData.credentials[which])
+                    }
+                    .create()
+                    .show()
             }
 
             etTitle.setText(presenter.projectData.title)
 
             etDescription.setText(presenter.projectData.description)
 
-            rvUsers.apply {
-                val usersAdapter = UsersAdapter(presenter.projectData.credentials)
+            etSpecification.setText(presenter.projectData.specification)
 
-                adapter = usersAdapter
-                layoutManager = LinearLayoutManager(context)
+            srlProject.setOnRefreshListener {
+                presenter.loadProjectData()
             }
         }
     }

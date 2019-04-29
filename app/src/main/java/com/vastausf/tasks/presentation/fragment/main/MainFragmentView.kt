@@ -5,7 +5,7 @@ import com.vastausf.tasks.presentation.fragment.base.BaseFragmentView
 
 interface MainFragmentView : BaseFragmentView {
 
-    fun bindProjectList(data: List<ProjectDataShort>, clean: Boolean = true)
+    fun bindProjectList(data: List<ProjectDataShort>)
 
     fun projectsLoadStatus(status: Boolean)
 

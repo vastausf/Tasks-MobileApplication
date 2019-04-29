@@ -1,10 +1,16 @@
 package com.vastausf.tasks.presentation.fragment.main
 
+import android.app.AlertDialog
 import android.os.Bundle
+import android.support.v4.content.ContextCompat.getColor
 import android.support.v7.widget.LinearLayoutManager
+import android.text.InputType
+import android.view.ContextThemeWrapper
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.EditText
+import android.widget.TextView
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.vastausf.tasks.R
@@ -15,6 +21,7 @@ import com.vastausf.tasks.presentation.fragment.base.BaseFragment
 import com.vastausf.tasks.presentation.fragment.project.ProjectFragment
 import kotlinx.android.synthetic.main.fragment_main.*
 import kotlinx.android.synthetic.main.fragment_main.view.*
+import java.awt.font.TextAttribute
 import javax.inject.Inject
 
 class MainFragment : BaseFragment(), MainFragmentView, ProjectsAdapter.ProjectListener {
@@ -24,32 +31,14 @@ class MainFragment : BaseFragment(), MainFragmentView, ProjectsAdapter.ProjectLi
     @field:InjectPresenter
     lateinit var presenter: MainFragmentPresenter
 
-    private val projectList = mutableListOf<ProjectDataShort>()
-
-    override fun bindProjectList(data: List<ProjectDataShort>, clean: Boolean) {
+    override fun bindProjectList(data: List<ProjectDataShort>) {
         view?.rvProjects?.adapter?.let {
-            val itemCount = it.itemCount
-
-            if (clean) {
-                projectList.clear()
-                projectList.addAll(data)
-                it.notifyDataSetChanged()
-            } else {
-                projectList.addAll(data)
-                it.notifyItemRangeChanged(itemCount - 1, data.size)
-            }
+            it.notifyDataSetChanged()
 
             view?.tvProjectsPlaceholder?.visibility = if (it.itemCount == 0)
                 View.VISIBLE
             else
                 View.GONE
-
-        }
-    }
-
-    override fun onLoadLast() {
-        rvProjects.adapter?.let {
-            presenter.loadProjects(it.itemCount, resources.getInteger(R.integer.load_items), clean = false)
         }
     }
 
@@ -63,16 +52,39 @@ class MainFragment : BaseFragment(), MainFragmentView, ProjectsAdapter.ProjectLi
         val view = inflater.inflate(R.layout.fragment_main, container, false)
 
         view.rvProjects.let {
-            it.adapter = ProjectsAdapter(this, projectList)
+            it.adapter = ProjectsAdapter(this, presenter.projectList)
             it.layoutManager = LinearLayoutManager(this.context)
         }
 
         view.srlProjects.setOnRefreshListener {
-            presenter.loadProjects(0, resources.getInteger(R.integer.load_items))
+            presenter.loadProjects()
         }
 
         view.fabNewProject.setOnClickListener {
-            presenter.onNewProjectClick()
+            val projectTitle = EditText(ContextThemeWrapper(context, R.style.EditText_WithoutUnderline)).apply {
+                inputType = InputType.TYPE_TEXT_FLAG_CAP_SENTENCES
+                hint = getString(R.string.title)
+                textAlignment = TextView.TEXT_ALIGNMENT_CENTER
+                setBackgroundColor(getColor(context, R.color.colorTransparent))
+                setPadding(
+                    resources.getDimension(R.dimen.spacing_normal).toInt(),
+                    resources.getDimension(R.dimen.spacing_normal).toInt(),
+                    resources.getDimension(R.dimen.spacing_normal).toInt(),
+                    resources.getDimension(R.dimen.spacing_normal).toInt()
+                )
+            }
+
+            AlertDialog
+                .Builder(context)
+                .setView(projectTitle)
+                .setPositiveButton(getString(R.string.create)) { dialog, which ->
+                    if (projectTitle.text.toString().isNotBlank())
+                        presenter.createProject(projectTitle.text.toString())
+                    else
+                        showToast(R.string.title_cant_be_empty)
+                }
+                .create()
+                .show()
         }
 
         return view
@@ -92,7 +104,7 @@ class MainFragment : BaseFragment(), MainFragmentView, ProjectsAdapter.ProjectLi
     override fun onStart() {
         super.onStart()
 
-        presenter.loadProjects(0, resources.getInteger(R.integer.load_items))
+        presenter.loadProjects()
     }
 
     override fun projectsLoadStatus(status: Boolean) {

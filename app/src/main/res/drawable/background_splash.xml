@@ -3,8 +3,8 @@
 
     <item
         android:drawable="@drawable/ic_icon"
-        android:width="@dimen/view_size_xx_large"
-        android:height="@dimen/view_size_xx_large"
+        android:width="@dimen/view_size_x_large"
+        android:height="@dimen/view_size_x_large"
         android:gravity="center"/>
 
 </layer-list>

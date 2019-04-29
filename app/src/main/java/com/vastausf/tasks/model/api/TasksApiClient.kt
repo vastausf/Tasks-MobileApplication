@@ -23,13 +23,11 @@ constructor(
         )
     }
 
-    fun getProjectList(offset: Int, limit: Int, parameters: ProjectDataSearch): Single<ProjectFindC> {
+    fun getProjectList(parameters: ProjectDataSearch): Single<ProjectFindC> {
         return tasksApiService.projectFind(
             contentType,
             tasksTokenStore.accessToken,
             ProjectFindS(
-                offset,
-                limit,
                 parameters
             )
         )
@@ -61,13 +59,21 @@ constructor(
         )
     }
 
-    fun getUserList(offset: Int, limit: Int, parameters: UserDataSearch): Single<UserFindC> {
+    fun getUserList(parameters: UserDataSearch): Single<UserFindC> {
         return tasksApiService.userFind(
             contentType,
             tasksTokenStore.accessToken,
             UserFindS(
-                offset,
-                limit,
+                parameters
+            )
+        )
+    }
+
+    fun getTaskList(parameters: TaskDataSearch): Single<TaskFindC> {
+        return tasksApiService.taskFind(
+            contentType,
+            tasksTokenStore.accessToken,
+            TaskFindS(
                 parameters
             )
         )

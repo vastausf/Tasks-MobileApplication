@@ -26,4 +26,8 @@
     <string name="first_name">first name</string>
     <string name="last_name">last name</string>
     <string name="tag_fragment_project_task_list">tag_fragment_project_task_list</string>
+    <string name="credentials">credentials</string>
+
+    <string name="create">create</string>
+    <string name="title_cant_be_empty">title can\'t be empty</string>
 </resources>

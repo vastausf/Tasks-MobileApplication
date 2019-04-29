@@ -1,8 +1,6 @@
 package com.vastausf.tasks.model.api.tasksApiData
 
 data class UserFindS(
-    val offset: Int,
-    val limit: Int,
     val parameters: UserDataSearch
 )
 
@@ -32,5 +30,7 @@ data class UserDataFull(
 data class UserDataSearch(
     val ids: List<Int>? = null,
     val email: String? = null,
-    val name: String? = null
+    val lastName: String? = null,
+    val firstName: String? = null,
+    val middleName: String? = null
 )
