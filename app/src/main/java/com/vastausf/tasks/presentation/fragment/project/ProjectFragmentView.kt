@@ -6,6 +6,8 @@ interface ProjectFragmentView : BaseFragmentView {
 
     fun bindProjectData()
 
-    fun loadStatus(status: Boolean)
+    fun updateLoadStatus()
+
+    fun updateEditMode()
 
 }

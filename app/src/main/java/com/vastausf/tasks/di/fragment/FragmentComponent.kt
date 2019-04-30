@@ -4,6 +4,7 @@ import com.vastausf.tasks.di.application.ApplicationComponent
 import com.vastausf.tasks.presentation.fragment.login.LoginFragment
 import com.vastausf.tasks.presentation.fragment.main.MainFragment
 import com.vastausf.tasks.presentation.fragment.project.ProjectFragment
+import com.vastausf.tasks.presentation.fragment.projectList.ProjectListFragment
 import com.vastausf.tasks.presentation.fragment.taskList.TaskListFragment
 import dagger.Component
 
@@ -17,5 +18,7 @@ interface FragmentComponent {
     fun inject(projectFragment: ProjectFragment)
 
     fun inject(taskListFragment: TaskListFragment)
+
+    fun inject(projectListFragment: ProjectListFragment)
 
 }

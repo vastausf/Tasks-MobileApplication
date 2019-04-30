@@ -3,7 +3,10 @@ package com.vastausf.tasks.presentation.fragment.project
 import com.arellomobile.mvp.InjectViewState
 import com.vastausf.tasks.R
 import com.vastausf.tasks.model.api.TasksApiClient
-import com.vastausf.tasks.model.api.tasksApiData.*
+import com.vastausf.tasks.model.api.tasksApiData.ProjectDataEdit
+import com.vastausf.tasks.model.api.tasksApiData.ProjectDataFull
+import com.vastausf.tasks.model.api.tasksApiData.ProjectDataFullC
+import com.vastausf.tasks.model.api.tasksApiData.ProjectEditC
 import com.vastausf.tasks.presentation.fragment.base.BaseFragmentPresenter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -17,17 +20,36 @@ constructor(
 ) : BaseFragmentPresenter<ProjectFragmentView>() {
     var projectId: Int = 0
 
+    var editMode = false
+        set(value) {
+            field = value
+            viewState.updateEditMode()
+        }
+
+    var loadStatus = false
+        set(value) {
+            field = value
+            viewState.updateLoadStatus()
+        }
+
     lateinit var projectData: ProjectDataFull
 
+    fun onEditClick(newData: ProjectDataEdit) {
+        if (editMode)
+            editProjectData(projectId, newData)
+
+        editMode = !editMode
+    }
+
     fun loadProjectData() {
-        viewState.loadStatus(true)
+        loadStatus = true
 
         tasksApiClient
             .getProjectFullData(projectId)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doFinally {
-                viewState.loadStatus(false)
+                loadStatus = false
             }
             .subscribe(this::onLoadProjectDataSuccess, this::onLoadProjectDataError)
             .unsubscribeOnDestroy()
@@ -45,14 +67,14 @@ constructor(
     }
 
     private fun editProjectData(id: Int, projectDataEdit: ProjectDataEdit) {
-        viewState.loadStatus(true)
+        loadStatus = true
 
         tasksApiClient
             .editProject(id, projectDataEdit)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doFinally {
-                viewState.loadStatus(false)
+                loadStatus = false
             }
             .subscribe(this::onEditProjectDataSuccess, this::onEditProjectDataError)
             .unsubscribeOnDestroy()

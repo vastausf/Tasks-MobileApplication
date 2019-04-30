@@ -19,6 +19,4 @@ interface BaseFragmentView : MvpView {
 
     fun showToast(text: Int)
 
-    fun loadingProgress(state: Boolean)
-
 }

@@ -18,24 +18,20 @@ abstract class BaseFragment : MvpAppCompatFragment(), BaseFragmentView {
     }
 
     override fun launchFragment(fragment: BaseFragment, finish: Boolean, container: Int, bundle: Bundle?) {
-        fragmentManager?.beginTransaction()
-            ?.apply {
-                hide(this@BaseFragment)
-                setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                add(R.id.fragmentContainer, fragment)
-                fragment.arguments = bundle
-                if (!finish) addToBackStack(fragment.tag)
-            }
-            ?.commit()
+        activity?.supportFragmentManager?.beginTransaction()?.apply {
+            hide(this@BaseFragment)
+            setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+            fragment.arguments = bundle
+            add(R.id.fragmentContainer, fragment)
+            if (!finish) addToBackStack(fragment.tag)
+        }?.commit()
     }
 
     override fun replaceFragment(fragment: BaseFragment, finish: Boolean, container: Int) {
-        fragmentManager?.beginTransaction()
-            ?.apply {
-                setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
-                replace(container, fragment)
-            }
-            ?.commit()
+        fragmentManager?.beginTransaction()?.apply {
+            setTransition(FragmentTransaction.TRANSIT_FRAGMENT_FADE)
+            replace(container, fragment)
+        }?.commit()
     }
 
     override fun showToast(text: Any) {
@@ -51,10 +47,6 @@ abstract class BaseFragment : MvpAppCompatFragment(), BaseFragmentView {
             this@BaseFragment.activity?.startActivity(this)
             if (finish) this@BaseFragment.activity?.finishAffinity()
         }
-    }
-
-    override fun loadingProgress(state: Boolean) {
-
     }
 
     override fun goBack() {

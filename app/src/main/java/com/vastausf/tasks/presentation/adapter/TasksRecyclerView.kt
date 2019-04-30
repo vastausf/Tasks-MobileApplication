@@ -1,25 +1,29 @@
+@file:SuppressLint("SetTextI18n")
+
 package com.vastausf.tasks.presentation.adapter
 
+import android.annotation.SuppressLint
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.vastausf.tasks.R
-import com.vastausf.tasks.model.api.tasksApiData.ProjectDataShort
-import kotlinx.android.synthetic.main.item_project.view.*
+import com.vastausf.tasks.model.api.tasksApiData.TaskDataFull
+import kotlinx.android.synthetic.main.item_task.view.*
 
-class ProjectsAdapter(
-    val listener: ProjectListener,
-    private val itemList: List<ProjectDataShort>
-) : RecyclerView.Adapter<ProjectsAdapter.ViewHolder>() {
+class TasksRecyclerView(
+    private val itemList: List<TaskDataFull>
+) : RecyclerView.Adapter<TasksRecyclerView.ViewHolder>() {
 
-    interface ProjectListener {
-        fun onProjectClick(projectData: ProjectDataShort)
+    var listener: TaskListener? = null
+
+    interface TaskListener {
+        fun onTaskClick(taskData: TaskDataFull)
     }
 
     override fun onCreateViewHolder(container: ViewGroup, layoutType: Int): ViewHolder {
         return ViewHolder(
-            LayoutInflater.from(container.context).inflate(R.layout.item_project, container, false)
+            LayoutInflater.from(container.context).inflate(R.layout.item_task, container, false)
         )
     }
 
@@ -33,12 +37,13 @@ class ProjectsAdapter(
 
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
-        fun bind(item: ProjectDataShort) {
+        fun bind(item: TaskDataFull) {
             itemView.etTitle.text = item.title
+            itemView.tvStatus.text = item.status.toString()
             itemView.etDescription.text = item.description
 
             itemView.setOnClickListener {
-                listener.onProjectClick(item)
+                listener?.onTaskClick(item)
             }
         }
 

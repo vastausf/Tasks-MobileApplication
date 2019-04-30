@@ -9,6 +9,7 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.vastausf.tasks.R
 import com.vastausf.tasks.di.fragment.DaggerFragmentComponent
+import com.vastausf.tasks.model.api.tasksApiData.ProjectDataEdit
 import com.vastausf.tasks.presentation.fragment.base.BaseFragment
 import kotlinx.android.synthetic.main.fragment_project.view.*
 import javax.inject.Inject
@@ -71,10 +72,36 @@ class ProjectFragment : BaseFragment(), ProjectFragmentView {
             srlProject.setOnRefreshListener {
                 presenter.loadProjectData()
             }
+
+            fabEditProject.setOnClickListener {
+                if (etTitle.text.isNotBlank()) {
+                    presenter.onEditClick(
+                        ProjectDataEdit(
+                            etTitle.text.toString(),
+                            etDescription.text.toString(),
+                            etSpecification.text.toString()
+                        )
+                    )
+                } else {
+                    showToast(R.string.title_cant_be_empty)
+                }
+            }
         }
     }
 
-    override fun loadStatus(status: Boolean) {
+    override fun updateEditMode() {
+        val status = presenter.editMode
+
+        view?.apply {
+            etTitle.isEnabled = status
+            etDescription.isEnabled = status
+            etSpecification.isEnabled = status
+        }
+    }
+
+    override fun updateLoadStatus() {
+        val status = presenter.loadStatus
+
         view?.apply {
             srlProject.isRefreshing = status
         }

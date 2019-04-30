@@ -70,7 +70,7 @@ interface TasksApiService {
         @Body body: TaskStatusEditS
     ): Single<TaskStatusEditC>
 
-    @POST("project/find")
+    @POST("task/find")
     fun taskFind(
         @Header("ContentType") contentType: String,
         @Header("AccessToken") accessToken: String,
