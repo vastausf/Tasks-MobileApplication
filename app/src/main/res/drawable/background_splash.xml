@@ -2,7 +2,7 @@
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
 
     <item
-        android:drawable="@drawable/ic_icon"
+        android:drawable="@drawable/ic_icon_full"
         android:width="@dimen/view_size_x_large"
         android:height="@dimen/view_size_x_large"
         android:gravity="center"/>

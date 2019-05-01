@@ -86,12 +86,12 @@ data class TaskDataEdit(
 )
 
 data class TaskDataSearch(
-    val ids: List<Int>? = null,
-    val title: String? = null,
-    val creatorId: List<Int>? = null,
-    val assignId: List<Int>? = null,
-    val description: String? = null,
-    val projectId: List<Int>? = null
+    var ids: List<Int>? = null,
+    var title: String? = null,
+    var creatorId: List<Int>? = null,
+    var assignId: List<Int>? = null,
+    var description: String? = null,
+    var projectId: List<Int>? = null
 )
 
 data class HistoryItem(

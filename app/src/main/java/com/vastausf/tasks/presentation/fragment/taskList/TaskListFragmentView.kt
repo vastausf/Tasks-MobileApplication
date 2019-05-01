@@ -4,7 +4,9 @@ import com.vastausf.tasks.presentation.fragment.base.BaseFragmentView
 
 interface TaskListFragmentView: BaseFragmentView {
 
-    fun loadStatus()
+    fun updateLoadState()
+
+    fun updateSearchState()
 
     fun bindTaskList()
 

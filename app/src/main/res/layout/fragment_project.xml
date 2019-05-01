@@ -34,7 +34,8 @@
                     android:hint="@string/title"
                     android:inputType="textCapCharacters"
                     android:textAlignment="center"
-                    android:textSize="@dimen/font_size_x_large" />
+                    android:textSize="@dimen/font_size_x_large"
+                    android:maxLines="1"/>
 
                 <View style="@style/Separator" />
 
@@ -69,7 +70,8 @@
                     android:layout_height="wrap_content"
                     android:enabled="false"
                     android:hint="@string/specification"
-                    android:textSize="@dimen/font_size_normal" />
+                    android:textSize="@dimen/font_size_normal"
+                    android:singleLine="true"/>
 
                 <View style="@style/Separator" />
 
@@ -81,7 +83,9 @@
                     android:enabled="false"
                     android:hint="@string/description"
                     android:textAlignment="textStart"
-                    android:textSize="@dimen/font_size_normal" />
+                    android:textSize="@dimen/font_size_normal"
+                    android:minLines="3"
+                    android:background="@drawable/background_editable_text"/>
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>
     </android.support.v4.widget.SwipeRefreshLayout>

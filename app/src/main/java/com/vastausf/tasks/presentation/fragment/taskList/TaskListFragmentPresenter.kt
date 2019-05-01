@@ -17,10 +17,18 @@ class TaskListFragmentPresenter
 constructor(
     private val tasksApiClient: TasksApiClient
 ) : BaseFragmentPresenter<TaskListFragmentView>() {
+    val taskDataSearch = TaskDataSearch()
+
     var loadState = false
         set(value) {
             field = value
-            viewState.loadStatus()
+            viewState.updateLoadState()
+        }
+
+    var searchState = false
+        set(value) {
+            field = value
+            viewState.updateSearchState()
         }
 
     var taskList = mutableListOf<TaskDataFull>()
@@ -29,7 +37,7 @@ constructor(
         loadState = true
 
         tasksApiClient
-            .getTaskList(TaskDataSearch())
+            .getTaskList(taskDataSearch)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doFinally {

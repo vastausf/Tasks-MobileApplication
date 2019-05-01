@@ -30,4 +30,7 @@
 
     <string name="create">create</string>
     <string name="title_cant_be_empty">title can\'t be empty</string>
+    <string name="projects">projects</string>
+    <string name="all_projects">all projects</string>
+    <string name="all_tasks">all tasks</string>
 </resources>

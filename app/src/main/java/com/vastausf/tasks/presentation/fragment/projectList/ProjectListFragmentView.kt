@@ -8,4 +8,6 @@ interface ProjectListFragmentView: BaseFragmentView {
 
     fun updateLoadState()
 
+    fun updateSearchState()
+
 }

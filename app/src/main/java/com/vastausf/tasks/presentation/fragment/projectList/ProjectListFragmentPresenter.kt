@@ -16,6 +16,13 @@ class ProjectListFragmentPresenter
 constructor(
     private val tasksApiClient: TasksApiClient
 ) : BaseFragmentPresenter<ProjectListFragmentView>() {
+    val projectDataSearch = ProjectDataSearch()
+
+    var searchState = false
+        set(value) {
+            field = value
+            viewState.updateSearchState()
+        }
 
     var loadState = false
         set(value) {
@@ -25,13 +32,11 @@ constructor(
 
     val projectList = mutableListOf<ProjectDataShort>()
 
-    fun loadProjects(
-        parameters: ProjectDataSearch = ProjectDataSearch()
-    ) {
+    fun loadProjects() {
         loadState = true
 
         tasksApiClient
-            .getProjectList(parameters)
+            .getProjectList(projectDataSearch)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doFinally {

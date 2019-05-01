@@ -77,7 +77,7 @@ data class ProjectDataEdit(
 )
 
 data class ProjectDataSearch(
-    val id: Int? = null,
-    val title: String? = null,
-    val description: String? = null
+    var id: Int? = null,
+    var title: String? = null,
+    var description: String? = null
 )
