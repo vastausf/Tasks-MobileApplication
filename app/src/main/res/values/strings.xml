@@ -33,4 +33,16 @@
     <string name="projects">projects</string>
     <string name="all_projects">all projects</string>
     <string name="all_tasks">all tasks</string>
+    <string name="all">all</string>
+    <string name="mine">mine</string>
+    <string name="with_me">with me</string>
+
+    <string name="by_me">by me</string>
+    <string name="to_me">to me</string>
+    <string name="search">search</string>
+    <string name="created_by_me">created by me</string>
+    <string name="created_by">created by</string>
+    <string name="assign_to">assign to</string>
+    <string name="middle_name">middle name</string>
+    <string name="email">email</string>
 </resources>

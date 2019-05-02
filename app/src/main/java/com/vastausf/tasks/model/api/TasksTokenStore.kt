@@ -8,6 +8,14 @@ class TasksTokenStore
 constructor(
     private val tasksSharedPreferences: SharedPreferences
 ) {
+
+    var userId: Int = 0
+        get() {
+            field = accessToken.split(":")[0].toInt()
+
+            return field
+        }
+
     private val accessTokenSharedPreferences = "accessToken"
     private var accessTokenCache: String? = null
     var accessToken: String

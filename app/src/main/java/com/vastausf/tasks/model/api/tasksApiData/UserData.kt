@@ -28,9 +28,9 @@ data class UserDataFull(
 )
 
 data class UserDataSearch(
-    val ids: List<Int>? = null,
-    val email: String? = null,
-    val lastName: String? = null,
-    val firstName: String? = null,
-    val middleName: String? = null
+    var ids: List<Int>? = null,
+    var email: String? = null,
+    var lastName: String? = null,
+    var firstName: String? = null,
+    var middleName: String? = null
 )

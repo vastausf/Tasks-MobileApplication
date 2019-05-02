@@ -1,23 +1,23 @@
-package com.vastausf.tasks.presentation.fragment.taskList
+package com.vastausf.tasks.presentation.fragment.userList
 
 import com.arellomobile.mvp.InjectViewState
 import com.vastausf.tasks.R
 import com.vastausf.tasks.model.api.TasksApiClient
-import com.vastausf.tasks.model.api.TasksTokenStore
-import com.vastausf.tasks.model.api.tasksApiData.*
+import com.vastausf.tasks.model.api.tasksApiData.UserData
+import com.vastausf.tasks.model.api.tasksApiData.UserDataSearch
+import com.vastausf.tasks.model.api.tasksApiData.UserFindC
 import com.vastausf.tasks.presentation.fragment.base.BaseFragmentPresenter
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
 @InjectViewState
-class TaskListFragmentPresenter
+class UserListFragmentPresenter
 @Inject
 constructor(
-    private val tasksApiClient: TasksApiClient,
-    private val tasksTokenStore: TasksTokenStore
-) : BaseFragmentPresenter<TaskListFragmentView>() {
-    val taskDataSearch = TaskDataSearch()
+    private val tasksApiClient: TasksApiClient
+): BaseFragmentPresenter<UserListFragmentView>() {
+    val userDataSearch = UserDataSearch()
 
     var loadState = false
         set(value) {
@@ -25,32 +25,31 @@ constructor(
             viewState.updateLoadState()
         }
 
-    var taskList = mutableListOf<TaskDataFull>()
+    val userList = mutableListOf<UserData>()
 
-    fun loadTaskList() {
+    fun loadUserList() {
         loadState = true
 
         tasksApiClient
-            .getTaskList(taskDataSearch)
+            .getUserList(userDataSearch)
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .doFinally {
                 loadState = false
             }
-            .subscribe(this::onLoadTaskListSuccess, this::onLoadTaskListError)
+            .subscribe(this::onLoadUserListSuccess, this::onLoadUserListError)
             .unsubscribeOnDestroy()
     }
 
-    private fun onLoadTaskListSuccess(data: TaskFindC) {
-        taskList.clear()
-        taskList.addAll(data.data)
+    private fun onLoadUserListSuccess(data: UserFindC) {
+        userList.clear()
+        userList.addAll(data.data)
 
-        viewState.bindTaskList()
+        viewState.updateUserList()
     }
 
-    private fun onLoadTaskListError(error: Throwable) {
+    private fun onLoadUserListError(error: Throwable) {
         viewState.showToast(R.string.error)
         error.printStackTrace()
     }
-
 }

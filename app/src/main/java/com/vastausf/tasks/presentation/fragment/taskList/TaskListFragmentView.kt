@@ -6,8 +6,6 @@ interface TaskListFragmentView: BaseFragmentView {
 
     fun updateLoadState()
 
-    fun updateSearchState()
-
     fun bindTaskList()
 
 }

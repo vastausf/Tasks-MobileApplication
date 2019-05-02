@@ -7,25 +7,23 @@
     tools:context=".presentation.activity.main.MainActivity">
 
     <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/srlTaskList"
+        android:id="@+id/srlUserList"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior">
+        android:layout_height="match_parent">
 
         <android.support.v7.widget.RecyclerView
-            android:id="@+id/rvTasks"
+            android:id="@+id/rvUserList"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:overScrollMode="never" />
+            android:layout_height="match_parent" />
     </android.support.v4.widget.SwipeRefreshLayout>
 
-    <include layout="@layout/bottom_sheet_task_search" />
+    <include layout="@layout/bottom_sheet_user_search"/>
 
     <LinearLayout
+        android:padding="@dimen/spacing_normal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:padding="@dimen/spacing_normal"
-        app:layout_anchor="@id/srlTaskList"
+        app:layout_anchor="@id/srlUserList"
         app:layout_anchorGravity="bottom|center"
         app:layout_behavior="android.support.design.behavior.HideBottomViewOnScrollBehavior">
 
@@ -35,7 +33,7 @@
             android:background="@drawable/background_button_accent">
 
             <Button
-                android:id="@+id/bSearchTask"
+                android:id="@+id/bSearchUser"
                 style="@style/ButtonSimple"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"

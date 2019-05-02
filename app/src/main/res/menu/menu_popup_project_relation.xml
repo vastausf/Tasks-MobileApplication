@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:id="@+id/iAll" android:title="@string/all"/>
+
+    <item android:id="@+id/iByMe" android:title="@string/by_me"/>
+
+    <item android:id="@+id/iToMe" android:title="@string/to_me"/>
+
+</menu>

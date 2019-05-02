@@ -1,26 +1,29 @@
 package com.vastausf.tasks.presentation.fragment.taskList
 
-import android.app.Service
+import android.annotation.SuppressLint
 import android.os.Bundle
+import android.support.design.widget.BottomSheetBehavior
 import android.support.v7.widget.LinearLayoutManager
 import android.text.Editable
 import android.text.TextWatcher
-import android.view.KeyEvent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.view.inputmethod.InputMethodManager
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.vastausf.tasks.R
 import com.vastausf.tasks.di.fragment.DaggerFragmentComponent
 import com.vastausf.tasks.model.api.tasksApiData.TaskDataFull
+import com.vastausf.tasks.model.api.tasksApiData.UserData
 import com.vastausf.tasks.presentation.adapter.TasksRecyclerView
+import com.vastausf.tasks.presentation.adapter.UsersRecyclerView
 import com.vastausf.tasks.presentation.fragment.base.BaseFragment
+import com.vastausf.tasks.presentation.fragment.userList.UserListFragment
+import kotlinx.android.synthetic.main.bottom_sheet_task_search.view.*
 import kotlinx.android.synthetic.main.fragment_task_list.view.*
 import javax.inject.Inject
 
-class TaskListFragment: BaseFragment(), TaskListFragmentView, TasksRecyclerView.TaskListener {
+class TaskListFragment : BaseFragment(), TaskListFragmentView, TasksRecyclerView.TaskListener, UsersRecyclerView.UserListener {
 
     @Inject
     @get:ProvidePresenter
@@ -38,24 +41,8 @@ class TaskListFragment: BaseFragment(), TaskListFragmentView, TasksRecyclerView.
         super.onCreate(savedInstanceState)
     }
 
-    override fun updateSearchState() {
-        val state = presenter.searchState
-
-        view?.apply {
-            etTaskTitleSearch.isEnabled = state
-
-            if (state) {
-                bTaskSearch.visibility = View.GONE
-
-                etTaskTitleSearch.requestFocus()
-
-                (tasksApplication
-                    .getSystemService(Service.INPUT_METHOD_SERVICE) as InputMethodManager)
-                    .showSoftInput(etTaskTitleSearch, InputMethodManager.SHOW_IMPLICIT)
-            } else {
-                bTaskSearch.visibility = View.VISIBLE
-            }
-        }
+    override fun onUserClick(userData: UserData) {
+        showToast(userData)
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
@@ -69,35 +56,94 @@ class TaskListFragment: BaseFragment(), TaskListFragmentView, TasksRecyclerView.
                 }
             }
 
-            srlTasks.setOnRefreshListener {
+            srlTaskList.setOnRefreshListener {
                 presenter.loadTaskList()
             }
 
-            bTaskSearch.setOnClickListener {
-                presenter.searchState = true
+            bSearchTask.setOnClickListener {
+                BottomSheetBehavior.from(llBottomSearchView).state = BottomSheetBehavior.STATE_EXPANDED
             }
 
-            etTaskTitleSearch.addTextChangedListener(object : TextWatcher {
-                override fun afterTextChanged(s: Editable?) {
-                    presenter.taskDataSearch.title = s.toString()
-                    presenter.loadTaskList()
+            llBottomSearchView.apply {
+                bClearSearch.setOnClickListener {
+                    etTaskTitleSearch.setText("")
+                    etTaskDescriptionSearch.setText("")
+
+                    bTaskSearchCreatedBy.setText(R.string.created_by)
+                    presenter.taskDataSearch.creatorId = null
+                    bTaskSearchAssignedTo.setText(R.string.assign_to)
+                    presenter.taskDataSearch.assignId = null
+
+                    BottomSheetBehavior.from(llBottomSearchView).state = BottomSheetBehavior.STATE_HIDDEN
                 }
 
-                override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+                etTaskTitleSearch.addTextChangedListener(object : TextWatcher {
+                    override fun afterTextChanged(s: Editable?) {
+                        presenter.taskDataSearch.title = s.toString()
 
-                override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {}
-            })
+                        presenter.loadTaskList()
+                    }
 
-            etTaskTitleSearch.setOnKeyListener { _, _, event ->
-                if (event.keyCode == KeyEvent.KEYCODE_ENTER) {
-                    presenter.searchState = false
+                    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+                    }
+
+                    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+                    }
+                })
+
+                etTaskDescriptionSearch.addTextChangedListener(object : TextWatcher {
+                    override fun afterTextChanged(s: Editable?) {
+                        presenter.taskDataSearch.description = s.toString()
+
+                        presenter.loadTaskList()
+                    }
+
+                    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+
+                    }
+
+                    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+
+                    }
+                })
+
+                bTaskSearchCreatedBy.setOnClickListener {
+                    UserListFragment().apply {
+                        userListener = object : UserListFragment.UserListListener {
+                            @SuppressLint("SetTextI18n")
+                            override fun onUserClick(userData: UserData, fragment: UserListFragment) {
+                                this@TaskListFragment.presenter.taskDataSearch.creatorId = listOf(userData.id)
+                                bTaskSearchCreatedBy.text = "${getString(R.string.created_by)}: ${userData.firstName} ${userData.lastName}"
+                                fragment.goBack()
+
+                                this@TaskListFragment.presenter.loadTaskList()
+                            }
+                        }
+                        this@TaskListFragment.launchFragment(this)
+                    }
                 }
 
-                return@setOnKeyListener true
+                bTaskSearchAssignedTo.setOnClickListener {
+                    UserListFragment().apply {
+                        userListener = object : UserListFragment.UserListListener {
+                            @SuppressLint("SetTextI18n")
+                            override fun onUserClick(userData: UserData, fragment: UserListFragment) {
+                                this@TaskListFragment.presenter.taskDataSearch.assignId = listOf(userData.id)
+                                bTaskSearchAssignedTo.text = "${getString(R.string.assign_to)}: ${userData.firstName} ${userData.lastName}"
+                                fragment.goBack()
+
+                                this@TaskListFragment.presenter.loadTaskList()
+                            }
+                        }
+                        this@TaskListFragment.launchFragment(this)
+                    }
+                }
             }
+
+            BottomSheetBehavior.from(llBottomSearchView).state = BottomSheetBehavior.STATE_HIDDEN
         }
-
-        activity?.setActionBar(view.findViewById(R.id.tbTaskList))
 
         return view
     }
@@ -110,7 +156,7 @@ class TaskListFragment: BaseFragment(), TaskListFragmentView, TasksRecyclerView.
         val state = presenter.loadState
 
         view?.apply {
-            srlTasks.isRefreshing = state
+            srlTaskList.isRefreshing = state
         }
     }
 
