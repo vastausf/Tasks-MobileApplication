@@ -79,10 +79,10 @@ data class TaskDataShort(
 )
 
 data class TaskDataEdit(
-    val title: String? = null,
-    val assigned: Int? = null,
-    val description: String? = null,
-    val documents: List<String>? = null
+    var title: String? = null,
+    var assigned: Int? = null,
+    var description: String? = null,
+    var documents: List<String>? = null
 )
 
 data class TaskDataSearch(

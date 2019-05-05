@@ -9,6 +9,11 @@
 
         <item name="android:fontFamily">@font/roboto_light</item>
         <item name="android:textColor">@color/colorText</item>
+        <item name="alertDialogTheme">@style/PopupSimple</item>
+    </style>
+
+    <style name="PopupSimple" parent="AppTheme">
+        <item name="android:background">@drawable/background_popup</item>
     </style>
 
     <style name="SplashScreen" parent="AppTheme">

@@ -1,6 +1,8 @@
 package com.vastausf.tasks.presentation.fragment.project
 
 import android.app.AlertDialog
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -20,10 +22,18 @@ class ProjectFragment : BaseFragment(), ProjectFragmentView {
     @field:InjectPresenter
     lateinit var presenter: ProjectFragmentPresenter
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        presenter.projectId = arguments?.getInt("projectId") ?: 0
+    var projectId = 0
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         val view = inflater.inflate(R.layout.fragment_project, container, false)
+
+        view.apply {
+            activity?.setActionBar(tProject)
+        }
 
         return view
     }
@@ -44,11 +54,25 @@ class ProjectFragment : BaseFragment(), ProjectFragmentView {
             bDocuments.setOnClickListener {
                 AlertDialog
                     .Builder(context)
-                    .setItems(presenter.projectData.documents.toTypedArray()) { dialog, which ->
+                    .setItems(presenter.projectData.documents.toTypedArray()) { _, which ->
                         showToast(presenter.projectData.documents[which])
                     }
                     .create()
                     .show()
+            }
+
+            bSpecification.setOnClickListener {
+                Intent(Intent.ACTION_VIEW).apply {
+                    val specification = presenter.projectData.specification
+
+                    data = Uri.parse(if (specification.startsWith("http://") || specification.startsWith("https://")) {
+                        specification
+                    } else {
+                        getString(R.string.tasks_base_server_url) + "/files/" + specification
+                    })
+
+                    startActivity(this)
+                }
             }
 
             bCredentials.setOnClickListener {
@@ -56,7 +80,7 @@ class ProjectFragment : BaseFragment(), ProjectFragmentView {
                     .Builder(context)
                     .setItems(presenter.projectData.credentials.map {
                         "${it.firstName} ${it.lastName}"
-                    }.toTypedArray()) { dialog, which ->
+                    }.toTypedArray()) { _, which ->
                         showToast(presenter.projectData.credentials[which])
                     }
                     .create()
@@ -67,8 +91,6 @@ class ProjectFragment : BaseFragment(), ProjectFragmentView {
 
             etDescription.setText(presenter.projectData.description)
 
-            etSpecification.setText(presenter.projectData.specification)
-
             srlProject.setOnRefreshListener {
                 presenter.loadProjectData()
             }
@@ -78,8 +100,7 @@ class ProjectFragment : BaseFragment(), ProjectFragmentView {
                     presenter.onEditClick(
                         ProjectDataEdit(
                             etTitle.text.toString(),
-                            etDescription.text.toString(),
-                            etSpecification.text.toString()
+                            etDescription.text.toString()
                         )
                     )
                 } else {
@@ -95,7 +116,6 @@ class ProjectFragment : BaseFragment(), ProjectFragmentView {
         view?.apply {
             etTitle.isEnabled = status
             etDescription.isEnabled = status
-            etSpecification.isEnabled = status
         }
     }
 
@@ -110,6 +130,7 @@ class ProjectFragment : BaseFragment(), ProjectFragmentView {
     override fun onStart() {
         super.onStart()
 
+        presenter.projectId = projectId
         presenter.loadProjectData()
     }
 

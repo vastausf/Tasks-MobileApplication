@@ -21,7 +21,6 @@ import com.vastausf.tasks.di.fragment.DaggerFragmentComponent
 import com.vastausf.tasks.model.api.tasksApiData.ProjectDataShort
 import com.vastausf.tasks.presentation.adapter.ProjectsRecyclerView
 import com.vastausf.tasks.presentation.fragment.base.BaseFragment
-import com.vastausf.tasks.presentation.fragment.project.ProjectFragment
 import kotlinx.android.synthetic.main.bottom_sheet_project_search.view.*
 import kotlinx.android.synthetic.main.fragment_project_list.view.*
 import javax.inject.Inject
@@ -32,6 +31,14 @@ class ProjectListFragment : BaseFragment(), ProjectListFragmentView, ProjectsRec
     @get:ProvidePresenter
     @field:InjectPresenter
     lateinit var presenter: ProjectListFragmentPresenter
+
+    var listener: ProjectListListener? = null
+
+    interface ProjectListListener {
+
+        fun onProjectClick(fragment: ProjectListFragment, projectData: ProjectDataShort)
+
+    }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = inflater.inflate(R.layout.fragment_project_list, container, false)
@@ -121,7 +128,6 @@ class ProjectListFragment : BaseFragment(), ProjectListFragmentView, ProjectsRec
             BottomSheetBehavior.from(llBottomSearchView).state = BottomSheetBehavior.STATE_HIDDEN
         }
 
-
         return view
     }
 
@@ -141,9 +147,7 @@ class ProjectListFragment : BaseFragment(), ProjectListFragmentView, ProjectsRec
     }
 
     override fun onProjectClick(projectData: ProjectDataShort) {
-        launchFragment(ProjectFragment(), bundle = Bundle().apply {
-            putInt("projectId", projectData.id)
-        })
+        listener?.onProjectClick(this@ProjectListFragment, projectData)
     }
 
     override fun onStart() {

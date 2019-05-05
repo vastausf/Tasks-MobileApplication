@@ -1,9 +1,69 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.design.widget.CoordinatorLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Toolbar
+            app:layout_scrollFlags="scroll|snap"
+            android:id="@+id/tProject"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/colorPrimary">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <EditText
+                    android:textColor="@color/colorTextLight"
+                    android:id="@+id/etTitle"
+                    style="@style/EditText.WithoutUnderline"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:enabled="false"
+                    android:hint="@string/title"
+                    android:inputType="textCapCharacters"
+                    android:maxLines="1"
+                    android:textAlignment="textStart"
+                    android:textSize="@dimen/font_size_x_large"
+                    android:textStyle="bold"
+                    />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="end">
+
+                    <ImageButton
+                        android:id="@+id/bDocuments"
+                        android:layout_width="@dimen/view_size_large"
+                        android:layout_height="@dimen/view_size_large"
+                        android:src="@drawable/ic_attach_file"
+                        android:background="@color/colorTransparent" />
+
+                    <ImageButton
+                        android:id="@+id/bCredentials"
+                        android:layout_width="@dimen/view_size_large"
+                        android:layout_height="@dimen/view_size_large"
+                        android:src="@drawable/ic_people"
+                        android:background="@color/colorTransparent" />
+
+                    <ImageButton
+                        android:id="@+id/bSpecification"
+                        android:layout_width="@dimen/view_size_large"
+                        android:layout_height="@dimen/view_size_large"
+                        android:src="@drawable/ic_file"
+                        android:background="@color/colorTransparent" />
+                </LinearLayout>
+            </LinearLayout>
+        </Toolbar>
+    </android.support.design.widget.AppBarLayout>
 
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/srlProject"
@@ -12,7 +72,8 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent">
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior">
 
         <android.support.v4.widget.NestedScrollView
             android:id="@+id/svProject"
@@ -26,78 +87,28 @@
                 android:orientation="vertical">
 
                 <EditText
-                    android:id="@+id/etTitle"
-                    style="@style/EditText.WithoutUnderline"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:enabled="false"
-                    android:hint="@string/title"
-                    android:inputType="textCapCharacters"
-                    android:textAlignment="center"
-                    android:textSize="@dimen/font_size_x_large"
-                    android:maxLines="1"/>
-
-                <View style="@style/Separator" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:orientation="horizontal">
-
-                    <Button
-                        android:id="@+id/bDocuments"
-                        style="@style/ButtonSimple"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/documents" />
-
-                    <Button
-                        android:id="@+id/bCredentials"
-                        style="@style/ButtonSimple"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:text="@string/credentials" />
-                </LinearLayout>
-
-                <View style="@style/Separator" />
-
-                <EditText
-                    android:id="@+id/etSpecification"
-                    style="@style/EditText.WithoutUnderline"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:enabled="false"
-                    android:hint="@string/specification"
-                    android:textSize="@dimen/font_size_normal"
-                    android:singleLine="true"/>
-
-                <View style="@style/Separator" />
-
-                <EditText
                     android:id="@+id/etDescription"
                     style="@style/EditText.WithoutUnderline"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
+                    android:background="@drawable/background_editable_text"
                     android:enabled="false"
                     android:hint="@string/description"
-                    android:textAlignment="textStart"
-                    android:textSize="@dimen/font_size_normal"
                     android:minLines="3"
-                    android:background="@drawable/background_editable_text"/>
+                    android:textAlignment="textStart"
+                    android:textSize="@dimen/font_size_normal" />
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fabEditProject"
-        android:src="@drawable/ic_edit"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_anchor="@id/svProject"
-        app:layout_anchorGravity="bottom|end"
         android:layout_gravity="bottom|end"
         android:layout_margin="@dimen/spacing_x_small"
-        app:layout_behavior=".utils.FloatingActionButtonHideOnScrollBehavior"/>
+        android:src="@drawable/ic_edit"
+        app:layout_anchor="@id/svProject"
+        app:layout_anchorGravity="bottom|end"
+        app:layout_behavior=".utils.FloatingActionButtonHideOnScrollBehavior" />
 </android.support.design.widget.CoordinatorLayout>

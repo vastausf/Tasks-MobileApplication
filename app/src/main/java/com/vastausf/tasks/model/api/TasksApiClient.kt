@@ -79,4 +79,22 @@ constructor(
         )
     }
 
+    fun editTask(id: Int, data: TaskDataEdit): Single<TaskEditC> {
+        return tasksApiService.taskEdit(
+            contentType,
+            tasksTokenStore.accessToken,
+            TaskEditS(id, data)
+        )
+    }
+
+    fun getTaskData(parameters: TaskDataSearch): Single<TaskFindC> {
+        return tasksApiService.taskFind(
+            contentType,
+            tasksTokenStore.accessToken,
+            TaskFindS(
+                parameters
+            )
+        )
+    }
+
 }

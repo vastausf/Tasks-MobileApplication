@@ -30,6 +30,16 @@ class TaskListFragment : BaseFragment(), TaskListFragmentView, TasksRecyclerView
     @field:InjectPresenter
     lateinit var presenter: TaskListFragmentPresenter
 
+    var projectId: Int? = null
+
+    var listener: TaskListListener? = null
+
+    interface TaskListListener {
+
+        fun onTaskClick(fragment: TaskListFragment, taskData: TaskDataFull)
+
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         if (savedInstanceState == null) {
             DaggerFragmentComponent
@@ -149,7 +159,7 @@ class TaskListFragment : BaseFragment(), TaskListFragmentView, TasksRecyclerView
     }
 
     override fun onTaskClick(taskData: TaskDataFull) {
-        showToast(taskData)
+        listener?.onTaskClick(this, taskData)
     }
 
     override fun updateLoadState() {
@@ -169,6 +179,9 @@ class TaskListFragment : BaseFragment(), TaskListFragmentView, TasksRecyclerView
     override fun onStart() {
         super.onStart()
 
+        projectId?.let {
+            presenter.taskDataSearch.projectId = listOf(it)
+        }
         presenter.loadTaskList()
     }
 
