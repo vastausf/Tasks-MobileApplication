@@ -8,8 +8,6 @@ interface TaskFragmentView: BaseFragmentView {
 
     fun updateEditState()
 
-    fun updateCanEdit()
-
     fun bindTaskData()
 
 }

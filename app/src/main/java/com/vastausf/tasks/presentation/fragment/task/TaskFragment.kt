@@ -5,6 +5,7 @@ package com.vastausf.tasks.presentation.fragment.task
 import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.os.Bundle
+import android.support.annotation.RequiresApi
 import android.support.v4.content.ContextCompat
 import android.text.Editable
 import android.text.InputType
@@ -170,7 +171,7 @@ class TaskFragment : BaseFragment(), TaskFragmentView {
                 }
 
                 setOnLongClickListener {
-                    if (presenter.canEdit) {
+                    if (presenter.canEditStatus) {
                         AlertDialog
                             .Builder(context)
                             .setTitle(R.string.new_status)
@@ -236,6 +237,11 @@ class TaskFragment : BaseFragment(), TaskFragmentView {
                     putInt("projectId", presenter.taskData.projectId)
                 })
             }
+
+            activity?.setActionBar(tTask)
+
+            @RequiresApi
+            fabEditTask.visibility = if (presenter.canEditData) View.VISIBLE else View.GONE
         }
     }
 
@@ -253,13 +259,6 @@ class TaskFragment : BaseFragment(), TaskFragmentView {
             etDescription.isEnabled = state
 
             tvAssignTo.isEnabled = state
-        }
-    }
-
-    override fun updateCanEdit() {
-        view?.apply {
-            @SuppressLint("RestrictedApi")
-            fabEditTask.visibility = if (presenter.canEdit) View.VISIBLE else View.GONE
         }
     }
 

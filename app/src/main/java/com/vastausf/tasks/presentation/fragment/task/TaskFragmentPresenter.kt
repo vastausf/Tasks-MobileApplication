@@ -24,16 +24,18 @@ constructor(
 
     var taskId = 0
 
-    var canEdit = false
+    var canEditData = false
+        get() {
+            field = tasksTokenStore.userId == taskData.creatorId.id
+
+            return field
+        }
+
+    var canEditStatus = false
         get() {
             field = tasksTokenStore.userId == taskData.creatorId.id || tasksTokenStore.userId == taskData.assignId.id
 
             return field
-        }
-        set(value) {
-            field = value
-
-            viewState.updateCanEdit()
         }
 
     var loadState = false
@@ -70,8 +72,6 @@ constructor(
 
     private fun onLoadTaskDataSuccess(data: TaskFindC) {
         taskData = data.data.first()
-
-        canEdit = taskData.creatorId.id == tasksTokenStore.userId
 
         viewState.bindTaskData()
     }
