@@ -13,6 +13,7 @@ import com.vastausf.tasks.R
 import com.vastausf.tasks.di.fragment.DaggerFragmentComponent
 import com.vastausf.tasks.model.api.tasksApiData.ProjectDataEdit
 import com.vastausf.tasks.presentation.fragment.base.BaseFragment
+import com.vastausf.tasks.presentation.fragment.projectEdit.ProjectEditFragment
 import kotlinx.android.synthetic.main.fragment_project.view.*
 import javax.inject.Inject
 
@@ -55,23 +56,33 @@ class ProjectFragment : BaseFragment(), ProjectFragmentView {
                 AlertDialog
                     .Builder(context)
                     .setItems(presenter.projectData.documents.toTypedArray()) { _, which ->
-                        showToast(presenter.projectData.documents[which])
+                        val document = presenter.projectData.documents[which]
+
+                        if (document.startsWith("http") || document.startsWith("https")) {
+                            Intent(Intent.ACTION_VIEW).apply {
+                                data = Uri.parse(document)
+
+                                startActivity(this)
+                            }
+                        } else {
+                            showToast(R.string.error)
+                        }
                     }
                     .create()
                     .show()
             }
 
             bSpecification.setOnClickListener {
-                Intent(Intent.ACTION_VIEW).apply {
-                    val specification = presenter.projectData.specification
+                val specification = presenter.projectData.specification
 
-                    data = Uri.parse(if (specification.startsWith("http://") || specification.startsWith("https://")) {
-                        specification
-                    } else {
-                        getString(R.string.tasks_base_server_url) + "/files/" + specification
-                    })
+                if (specification.startsWith("http") || specification.startsWith("https")) {
+                    Intent(Intent.ACTION_VIEW).apply {
+                        data = Uri.parse(specification)
 
-                    startActivity(this)
+                        startActivity(this)
+                    }
+                } else {
+                    showToast(R.string.error)
                 }
             }
 
@@ -80,9 +91,7 @@ class ProjectFragment : BaseFragment(), ProjectFragmentView {
                     .Builder(context)
                     .setItems(presenter.projectData.credentials.map {
                         "${it.firstName} ${it.lastName}"
-                    }.toTypedArray()) { _, which ->
-                        showToast(presenter.projectData.credentials[which])
-                    }
+                    }.toTypedArray(), null)
                     .create()
                     .show()
             }
@@ -95,27 +104,11 @@ class ProjectFragment : BaseFragment(), ProjectFragmentView {
                 presenter.loadProjectData()
             }
 
-            fabEditProject.setOnClickListener {
-                if (etTitle.text.isNotBlank()) {
-                    presenter.onEditClick(
-                        ProjectDataEdit(
-                            etTitle.text.toString(),
-                            etDescription.text.toString()
-                        )
-                    )
-                } else {
-                    showToast(R.string.title_cant_be_empty)
-                }
+            bEdit.setOnClickListener {
+                launchFragment(ProjectEditFragment(), bundle = Bundle().apply {
+                    putInt("projectId", projectId)
+                })
             }
-        }
-    }
-
-    override fun updateEditMode() {
-        val status = presenter.editMode
-
-        view?.apply {
-            etTitle.isEnabled = status
-            etDescription.isEnabled = status
         }
     }
 

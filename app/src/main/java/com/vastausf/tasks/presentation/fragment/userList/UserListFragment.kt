@@ -40,7 +40,7 @@ class UserListFragment: BaseFragment(), UserListFragmentView, UsersRecyclerView.
         }
     }
 
-    override fun onUserClick(userData: UserData) {
+    override fun onUserClick(userData: UserData, view: View) {
         userListener?.onUserClick(userData, this)
     }
 
@@ -54,9 +54,7 @@ class UserListFragment: BaseFragment(), UserListFragmentView, UsersRecyclerView.
         view.apply {
             rvUserList.apply {
                 layoutManager = LinearLayoutManager(context)
-                adapter = UsersRecyclerView(presenter.userList).apply {
-                    listener = this@UserListFragment
-                }
+                adapter = UsersRecyclerView(this@UserListFragment, presenter.userList)
             }
 
             srlUserList.setOnRefreshListener {

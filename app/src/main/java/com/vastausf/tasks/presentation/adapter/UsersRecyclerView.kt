@@ -14,13 +14,16 @@ import kotlinx.android.synthetic.main.item_task.view.*
 import kotlinx.android.synthetic.main.item_user.view.*
 
 class UsersRecyclerView(
+    val listener: UserListener,
     private val itemList: List<UserData>
 ) : RecyclerView.Adapter<UsersRecyclerView.ViewHolder>() {
 
-    var listener: UserListener? = null
-
     interface UserListener {
-        fun onUserClick(userData: UserData)
+        fun onUserClick(userData: UserData, view: View)
+
+        fun onUserLongClick(userData: UserData, view: View) {
+
+        }
     }
 
     override fun onCreateViewHolder(container: ViewGroup, layoutType: Int): ViewHolder {
@@ -44,7 +47,13 @@ class UsersRecyclerView(
             itemView.tvEmail.text = item.email
 
             itemView.setOnClickListener {
-                listener?.onUserClick(item)
+                listener.onUserClick(item, itemView)
+            }
+
+            itemView.setOnLongClickListener{
+                listener.onUserLongClick(item, itemView)
+
+                return@setOnLongClickListener true
             }
         }
 

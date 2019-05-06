@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/llBottomSearchView"
+    android:id="@+id/llBottomCreateView"
     app:behavior_hideable="true"
     app:layout_behavior="android.support.design.widget.BottomSheetBehavior"
     android:layout_width="match_parent"
@@ -24,10 +24,10 @@
             style="@style/TextHeader"
             android:textColor="@color/colorTextLight"
             android:layout_height="wrap_content"
-            android:text="@string/search"/>
+            android:text="@string/create"/>
 
         <ImageButton
-            android:id="@+id/bClearSearch"
+            android:id="@+id/bClearCreate"
             android:layout_width="@dimen/view_size_large"
             android:layout_height="@dimen/view_size_large"
             android:src="@drawable/ic_clear"
@@ -41,38 +41,29 @@
         android:padding="@dimen/spacing_xxx_small">
 
         <EditText
-            android:id="@+id/etTaskTitleSearch"
+            android:id="@+id/etTaskTitleCreate"
             style="@style/EditText.WithoutUnderline"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="@string/all_tasks"
-            android:singleLine="true"
-            android:textAlignment="textStart"
-            android:textColor="@color/colorTextLight" />
-
-        <EditText
-            android:id="@+id/etTaskDescriptionSearch"
-            style="@style/EditText.WithoutUnderline"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/description"
+            android:hint="@string/title"
             android:singleLine="true"
             android:textAlignment="textStart"
             android:textColor="@color/colorTextLight" />
 
         <Button
-            android:id="@+id/bTaskSearchCreatedBy"
+            android:id="@+id/bTaskCreateAssignedTo"
+            android:text="@string/assign_to"
             android:textColor="@color/colorTextLight"
-            android:text="@string/created_by"
             style="@style/ButtonSimple"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
 
         <Button
-            android:id="@+id/bTaskSearchAssignedTo"
-            android:text="@string/assign_to"
+            android:id="@+id/bTaskCreate"
+            android:text="@string/create"
             android:textColor="@color/colorTextLight"
             style="@style/ButtonSimple"
+            android:textStyle="bold"
             android:layout_width="match_parent"
             android:layout_height="wrap_content" />
     </LinearLayout>

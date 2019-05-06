@@ -20,12 +20,6 @@ constructor(
 ) : BaseFragmentPresenter<ProjectFragmentView>() {
     var projectId: Int = 0
 
-    var editMode = false
-        set(value) {
-            field = value
-            viewState.updateEditMode()
-        }
-
     var loadStatus = false
         set(value) {
             field = value
@@ -33,13 +27,6 @@ constructor(
         }
 
     lateinit var projectData: ProjectDataFull
-
-    fun onEditClick(newData: ProjectDataEdit) {
-        if (editMode)
-            editProjectData(projectId, newData)
-
-        editMode = !editMode
-    }
 
     fun loadProjectData() {
         loadStatus = true
@@ -62,29 +49,6 @@ constructor(
     }
 
     private fun onLoadProjectDataError(error: Throwable) {
-        viewState.showToast(R.string.error)
-        error.printStackTrace()
-    }
-
-    private fun editProjectData(id: Int, projectDataEdit: ProjectDataEdit) {
-        loadStatus = true
-
-        tasksApiClient
-            .editProject(id, projectDataEdit)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .doFinally {
-                loadStatus = false
-            }
-            .subscribe(this::onEditProjectDataSuccess, this::onEditProjectDataError)
-            .unsubscribeOnDestroy()
-    }
-
-    private fun onEditProjectDataSuccess(data: ProjectEditC) {
-        loadProjectData()
-    }
-
-    private fun onEditProjectDataError(error: Throwable) {
         viewState.showToast(R.string.error)
         error.printStackTrace()
     }

@@ -12,10 +12,9 @@ import com.vastausf.tasks.model.api.tasksApiData.TaskDataFull
 import kotlinx.android.synthetic.main.item_task.view.*
 
 class TasksRecyclerView(
+    val listener: TaskListener,
     private val itemList: List<TaskDataFull>
 ) : RecyclerView.Adapter<TasksRecyclerView.ViewHolder>() {
-
-    var listener: TaskListener? = null
 
     interface TaskListener {
         fun onTaskClick(taskData: TaskDataFull)
@@ -43,7 +42,7 @@ class TasksRecyclerView(
             itemView.etDescription.text = item.description
 
             itemView.setOnClickListener {
-                listener?.onTaskClick(item)
+                listener.onTaskClick(item)
             }
         }
 

@@ -69,11 +69,11 @@ data class ProjectDataShort(
 
 
 data class ProjectDataEdit(
-    val title: String? = null,
-    val description: String? = null,
-    val specification: String? = null,
-    val credentials: List<Int>? = null,
-    val documents: List<String>? = null
+    var title: String? = null,
+    var description: String? = null,
+    var specification: String? = null,
+    var credentials: List<Int>? = null,
+    var documents: List<String>? = null
 )
 
 data class ProjectDataSearch(

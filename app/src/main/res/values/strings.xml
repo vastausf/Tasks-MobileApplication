@@ -20,6 +20,8 @@
     <string name="incorrect_login_or_password">incorrect login or password</string>
 
     <string name="error">error</string>
+    <string name="success">success</string>
+    <string name="apply">apply</string>
 
     <string name="add">add</string>
 
@@ -27,6 +29,7 @@
     <string name="title">title</string>
     <string name="description">description</string>
     <string name="documents">documents</string>
+    <string name="document">document</string>
     <string name="specification">specification</string>
     <string name="save">save</string>
     <string name="document_url">document url</string>
@@ -48,6 +51,10 @@
     <string name="mine">mine</string>
     <string name="with_me">with me</string>
 
+    <string name="already_added">already added</string>
+    <string name="new_status">new status</string>
+    <string name="comment">comment</string>
+
     <string name="by_me">by me</string>
     <string name="to_me">to me</string>
     <string name="search">search</string>
@@ -59,4 +66,7 @@
     <string name="history">history</string>
     <string name="open_project">open project</string>
     <string name="without_specification">without specification</string>
+    <string name="users">users</string>
+    <string name="user">user</string>
+    <string name="you_cant_edit_task">you can\'t edit task</string>
 </resources>

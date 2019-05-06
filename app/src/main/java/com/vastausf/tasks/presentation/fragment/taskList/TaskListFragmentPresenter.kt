@@ -53,4 +53,27 @@ constructor(
         error.printStackTrace()
     }
 
+    fun createTask(taskDataCreate: TaskDataCreate) {
+        loadState = true
+
+        tasksApiClient
+            .createNewTask(taskDataCreate)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doFinally {
+                loadState = false
+            }
+            .subscribe(this::onCreateNewTaskSuccess, this::onCreateNewTaskError)
+            .unsubscribeOnDestroy()
+    }
+
+    private fun onCreateNewTaskSuccess(data: TaskNewC) {
+        loadTaskList()
+    }
+
+    private fun onCreateNewTaskError(error: Throwable) {
+        viewState.showToast(R.string.error)
+        error.printStackTrace()
+    }
+
 }

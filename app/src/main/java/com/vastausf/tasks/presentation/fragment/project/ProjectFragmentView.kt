@@ -8,6 +8,4 @@ interface ProjectFragmentView : BaseFragmentView {
 
     fun updateLoadStatus()
 
-    fun updateEditMode()
-
 }

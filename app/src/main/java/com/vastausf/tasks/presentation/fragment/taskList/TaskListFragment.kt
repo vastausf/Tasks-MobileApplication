@@ -13,17 +13,20 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.vastausf.tasks.R
 import com.vastausf.tasks.di.fragment.DaggerFragmentComponent
+import com.vastausf.tasks.model.api.tasksApiData.TaskDataCreate
 import com.vastausf.tasks.model.api.tasksApiData.TaskDataFull
 import com.vastausf.tasks.model.api.tasksApiData.UserData
 import com.vastausf.tasks.presentation.adapter.TasksRecyclerView
 import com.vastausf.tasks.presentation.adapter.UsersRecyclerView
 import com.vastausf.tasks.presentation.fragment.base.BaseFragment
 import com.vastausf.tasks.presentation.fragment.userList.UserListFragment
+import kotlinx.android.synthetic.main.bottom_sheet_task_create.view.*
 import kotlinx.android.synthetic.main.bottom_sheet_task_search.view.*
 import kotlinx.android.synthetic.main.fragment_task_list.view.*
 import javax.inject.Inject
 
-class TaskListFragment : BaseFragment(), TaskListFragmentView, TasksRecyclerView.TaskListener, UsersRecyclerView.UserListener {
+class TaskListFragment : BaseFragment(), TaskListFragmentView, TasksRecyclerView.TaskListener,
+    UsersRecyclerView.UserListener {
 
     @Inject
     @get:ProvidePresenter
@@ -33,6 +36,8 @@ class TaskListFragment : BaseFragment(), TaskListFragmentView, TasksRecyclerView
     var projectId: Int? = null
 
     var listener: TaskListListener? = null
+
+    var newTaskAssignTo = 0
 
     interface TaskListListener {
 
@@ -51,19 +56,24 @@ class TaskListFragment : BaseFragment(), TaskListFragmentView, TasksRecyclerView
         super.onCreate(savedInstanceState)
     }
 
-    override fun onUserClick(userData: UserData) {
+    override fun onUserClick(userData: UserData, view: View) {
         showToast(userData)
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
         val view = inflater.inflate(R.layout.fragment_task_list, container, false)
 
         view.apply {
+            BottomSheetBehavior.from(llBottomSearchView).state = BottomSheetBehavior.STATE_HIDDEN
+            BottomSheetBehavior.from(llBottomCreateView).state = BottomSheetBehavior.STATE_HIDDEN
+
             rvTasks.apply {
                 layoutManager = LinearLayoutManager(context)
-                adapter = TasksRecyclerView(presenter.taskList).apply {
-                    listener = this@TaskListFragment
-                }
+                adapter = TasksRecyclerView(this@TaskListFragment, presenter.taskList)
             }
 
             srlTaskList.setOnRefreshListener {
@@ -71,7 +81,13 @@ class TaskListFragment : BaseFragment(), TaskListFragmentView, TasksRecyclerView
             }
 
             bSearchTask.setOnClickListener {
-                BottomSheetBehavior.from(llBottomSearchView).state = BottomSheetBehavior.STATE_EXPANDED
+                BottomSheetBehavior.from(llBottomSearchView).state =
+                    BottomSheetBehavior.STATE_EXPANDED
+            }
+
+            bCreateTask.setOnClickListener {
+                BottomSheetBehavior.from(llBottomCreateView).state =
+                    BottomSheetBehavior.STATE_EXPANDED
             }
 
             llBottomSearchView.apply {
@@ -84,7 +100,8 @@ class TaskListFragment : BaseFragment(), TaskListFragmentView, TasksRecyclerView
                     bTaskSearchAssignedTo.setText(R.string.assign_to)
                     presenter.taskDataSearch.assignId = null
 
-                    BottomSheetBehavior.from(llBottomSearchView).state = BottomSheetBehavior.STATE_HIDDEN
+                    BottomSheetBehavior.from(llBottomSearchView).state =
+                        BottomSheetBehavior.STATE_HIDDEN
                 }
 
                 etTaskTitleSearch.addTextChangedListener(object : TextWatcher {
@@ -94,11 +111,21 @@ class TaskListFragment : BaseFragment(), TaskListFragmentView, TasksRecyclerView
                         presenter.loadTaskList()
                     }
 
-                    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                    override fun beforeTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        count: Int,
+                        after: Int
+                    ) {
 
                     }
 
-                    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    override fun onTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        before: Int,
+                        count: Int
+                    ) {
 
                     }
                 })
@@ -110,11 +137,21 @@ class TaskListFragment : BaseFragment(), TaskListFragmentView, TasksRecyclerView
                         presenter.loadTaskList()
                     }
 
-                    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {
+                    override fun beforeTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        count: Int,
+                        after: Int
+                    ) {
 
                     }
 
-                    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                    override fun onTextChanged(
+                        s: CharSequence?,
+                        start: Int,
+                        before: Int,
+                        count: Int
+                    ) {
 
                     }
                 })
@@ -123,9 +160,14 @@ class TaskListFragment : BaseFragment(), TaskListFragmentView, TasksRecyclerView
                     UserListFragment().apply {
                         userListener = object : UserListFragment.UserListListener {
                             @SuppressLint("SetTextI18n")
-                            override fun onUserClick(userData: UserData, fragment: UserListFragment) {
-                                this@TaskListFragment.presenter.taskDataSearch.creatorId = listOf(userData.id)
-                                bTaskSearchCreatedBy.text = "${getString(R.string.created_by)}: ${userData.firstName} ${userData.lastName}"
+                            override fun onUserClick(
+                                userData: UserData,
+                                fragment: UserListFragment
+                            ) {
+                                this@TaskListFragment.presenter.taskDataSearch.creatorId =
+                                    listOf(userData.id)
+                                bTaskSearchCreatedBy.text =
+                                    "${getString(R.string.created_by)}: ${userData.firstName} ${userData.lastName}"
                                 fragment.goBack()
 
                                 this@TaskListFragment.presenter.loadTaskList()
@@ -139,9 +181,14 @@ class TaskListFragment : BaseFragment(), TaskListFragmentView, TasksRecyclerView
                     UserListFragment().apply {
                         userListener = object : UserListFragment.UserListListener {
                             @SuppressLint("SetTextI18n")
-                            override fun onUserClick(userData: UserData, fragment: UserListFragment) {
-                                this@TaskListFragment.presenter.taskDataSearch.assignId = listOf(userData.id)
-                                bTaskSearchAssignedTo.text = "${getString(R.string.assign_to)}: ${userData.firstName} ${userData.lastName}"
+                            override fun onUserClick(
+                                userData: UserData,
+                                fragment: UserListFragment
+                            ) {
+                                this@TaskListFragment.presenter.taskDataSearch.assignId =
+                                    listOf(userData.id)
+                                bTaskSearchAssignedTo.text =
+                                    "${getString(R.string.assign_to)}: ${userData.firstName} ${userData.lastName}"
                                 fragment.goBack()
 
                                 this@TaskListFragment.presenter.loadTaskList()
@@ -152,7 +199,53 @@ class TaskListFragment : BaseFragment(), TaskListFragmentView, TasksRecyclerView
                 }
             }
 
-            BottomSheetBehavior.from(llBottomSearchView).state = BottomSheetBehavior.STATE_HIDDEN
+            llBottomCreateView.apply {
+                bClearCreate.setOnClickListener {
+                    etTaskTitleCreate.setText("")
+                    bTaskCreateAssignedTo.setText(R.string.assign_to)
+
+                    BottomSheetBehavior.from(llBottomCreateView).state =
+                        BottomSheetBehavior.STATE_HIDDEN
+                }
+
+                bTaskCreate.setOnClickListener {
+                    val title = etTaskTitleCreate.text.toString()
+
+                    if (newTaskAssignTo != 0 && title.isNotEmpty())
+                        presenter.createTask(
+                            TaskDataCreate(
+                                projectId ?: 0,
+                                title,
+                                newTaskAssignTo,
+                                "",
+                                emptyList()
+                            )
+                        )
+                }
+
+                bTaskCreateAssignedTo.setOnClickListener {
+                    UserListFragment().apply {
+                        userListener = object : UserListFragment.UserListListener {
+                            @SuppressLint("SetTextI18n")
+                            override fun onUserClick(
+                                userData: UserData,
+                                fragment: UserListFragment
+                            ) {
+                                this@TaskListFragment.newTaskAssignTo = userData.id
+                                bTaskCreateAssignedTo.text =
+                                    "${getString(R.string.assign_to)}: " +
+                                        "${userData.firstName} ${userData.lastName}"
+
+                                fragment.goBack()
+                                this@TaskListFragment.presenter.loadTaskList()
+                            }
+                        }
+                        this@TaskListFragment.launchFragment(this)
+                    }
+                }
+            }
+
+            bCreateTask.visibility = if (projectId != null) View.VISIBLE else View.GONE
         }
 
         return view

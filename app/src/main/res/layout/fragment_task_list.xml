@@ -21,6 +21,8 @@
 
     <include layout="@layout/bottom_sheet_task_search" />
 
+    <include layout="@layout/bottom_sheet_task_create" />
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -41,6 +43,15 @@
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
                 android:text="@string/search"
+                android:textColor="@color/colorTextLight" />
+
+            <Button
+                android:id="@+id/bCreateTask"
+                style="@style/ButtonSimple"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="@string/create"
                 android:textColor="@color/colorTextLight" />
         </LinearLayout>
     </LinearLayout>

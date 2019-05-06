@@ -4,6 +4,7 @@ import com.vastausf.tasks.di.application.ApplicationComponent
 import com.vastausf.tasks.presentation.fragment.login.LoginFragment
 import com.vastausf.tasks.presentation.fragment.main.MainFragment
 import com.vastausf.tasks.presentation.fragment.project.ProjectFragment
+import com.vastausf.tasks.presentation.fragment.projectEdit.ProjectEditFragment
 import com.vastausf.tasks.presentation.fragment.projectInfo.ProjectInfoFragment
 import com.vastausf.tasks.presentation.fragment.projectList.ProjectListFragment
 import com.vastausf.tasks.presentation.fragment.task.TaskFragment
@@ -29,5 +30,7 @@ interface FragmentComponent {
     fun inject(taskFragment: TaskFragment)
 
     fun inject(projectInfoFragment: ProjectInfoFragment)
+
+    fun inject(projectEditFragment: ProjectEditFragment)
 
 }

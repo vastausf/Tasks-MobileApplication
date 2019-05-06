@@ -79,6 +79,22 @@ constructor(
         )
     }
 
+    fun createNewTask(data: TaskDataCreate): Single<TaskNewC> {
+        return tasksApiService.taskNew(
+            contentType,
+            tasksTokenStore.accessToken,
+            TaskNewS(data)
+        )
+    }
+
+    fun changeTaskStatus(id: Int, newStatus: Int, comment: String): Single<TaskStatusEditC> {
+        return tasksApiService.taskStatusEdit(
+            contentType,
+            tasksTokenStore.accessToken,
+            TaskStatusEditS(id, newStatus, comment)
+        )
+    }
+
     fun editTask(id: Int, data: TaskDataEdit): Single<TaskEditC> {
         return tasksApiService.taskEdit(
             contentType,

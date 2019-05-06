@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="end">
+
+                <ImageButton
+                    android:id="@+id/bProjectEditApply"
+                    android:layout_width="@dimen/view_size_large"
+                    android:layout_height="@dimen/view_size_large"
+                    android:background="@color/colorTransparent"
+                    android:src="@drawable/ic_check" />
+            </LinearLayout>
+        </Toolbar>
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/srlProjectEdit"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/etProjectEditTitle"
+                    style="@style/EditText.WithoutUnderline"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/title"
+                    android:textSize="@dimen/font_size_x_large"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:textSize="@dimen/font_size_normal"
+                    android:id="@+id/etProjectEditSpecification"
+                    style="@style/EditText.WithoutUnderline"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/specification" />
+
+                <EditText
+                    android:textSize="@dimen/font_size_normal"
+                    android:id="@+id/etProjectEditDescription"
+                    style="@style/EditText.WithoutUnderline"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/description" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <Button
+                        android:id="@+id/bProjectEditDocuments"
+                        style="@style/ButtonSimple"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/documents" />
+
+                    <Button
+                        android:id="@+id/bProjectEditUsers"
+                        style="@style/ButtonSimple"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="@string/users" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/llProjectEditDocuments"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center">
+
+                        <EditText
+                            android:id="@+id/etProjectEditNewDocument"
+                            style="@style/EditText.WithoutUnderline"
+                            android:layout_width="0dp"
+                            android:layout_weight="1"
+                            android:layout_height="wrap_content"
+                            android:singleLine="true"
+                            android:hint="@string/document" />
+
+                        <ImageButton
+                            android:id="@+id/bAddDocument"
+                            android:tint="@color/colorPrimary"
+                            android:background="@color/colorTransparent"
+                            android:src="@drawable/ic_add"
+                            android:layout_width="@dimen/view_size_large"
+                            android:layout_height="@dimen/view_size_large" />
+                    </LinearLayout>
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rvProjectEditDocuments"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:visibility="gone"
+                    android:id="@+id/llProjectEditUser"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:gravity="center">
+
+                        <ImageButton
+                            android:id="@+id/bAddUser"
+                            android:tint="@color/colorPrimary"
+                            android:background="@color/colorTransparent"
+                            android:src="@drawable/ic_add"
+                            android:layout_width="@dimen/view_size_large"
+                            android:layout_height="@dimen/view_size_large" />
+                    </LinearLayout>
+
+                    <android.support.v7.widget.RecyclerView
+                        android:id="@+id/rvProjectEditUsers"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
+                </LinearLayout>
+            </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
+    </android.support.v4.widget.SwipeRefreshLayout>
+</LinearLayout>

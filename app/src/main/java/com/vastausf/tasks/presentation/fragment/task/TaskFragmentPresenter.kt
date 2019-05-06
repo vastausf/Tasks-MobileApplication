@@ -25,6 +25,11 @@ constructor(
     var taskId = 0
 
     var canEdit = false
+        get() {
+            field = tasksTokenStore.userId == taskData.creatorId.id || tasksTokenStore.userId == taskData.assignId.id
+
+            return field
+        }
         set(value) {
             field = value
 
@@ -72,6 +77,29 @@ constructor(
     }
 
     private fun onLoadTaskDataError(error: Throwable) {
+        viewState.showToast(R.string.error)
+        error.printStackTrace()
+    }
+
+    fun changeTaskStatus(newStatus: Int, comment: String) {
+        loadState = true
+
+        tasksApiClient
+            .changeTaskStatus(taskId, newStatus, comment)
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .doFinally {
+                loadState = false
+            }
+            .subscribe(this::onTaskStatusEditSuccess, this::onTaskStatusEditError)
+            .unsubscribeOnDestroy()
+    }
+
+    private fun onTaskStatusEditSuccess(data: TaskStatusEditC) {
+        loadTaskData()
+    }
+
+    private fun onTaskStatusEditError(error: Throwable) {
         viewState.showToast(R.string.error)
         error.printStackTrace()
     }
