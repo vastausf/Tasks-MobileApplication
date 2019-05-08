@@ -210,8 +210,11 @@ class TaskListFragment : BaseFragment(), TaskListFragmentView, TasksRecyclerView
 
                 bTaskCreate.setOnClickListener {
                     val title = etTaskTitleCreate.text.toString()
+                    val newTaskAssignTo = newTaskAssignTo
 
-                    if (newTaskAssignTo != 0 && title.isNotEmpty())
+                    if (newTaskAssignTo != 0 && title.isNotEmpty()) {
+                        bClearCreate.callOnClick()
+
                         presenter.createTask(
                             TaskDataCreate(
                                 projectId ?: 0,
@@ -221,6 +224,7 @@ class TaskListFragment : BaseFragment(), TaskListFragmentView, TasksRecyclerView
                                 emptyList()
                             )
                         )
+                    }
                 }
 
                 bTaskCreateAssignedTo.setOnClickListener {

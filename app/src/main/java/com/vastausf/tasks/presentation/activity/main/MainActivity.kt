@@ -1,5 +1,6 @@
 package com.vastausf.tasks.presentation.activity.main
 
+import android.app.AlertDialog
 import android.os.Bundle
 import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
@@ -30,4 +31,19 @@ class MainActivity : BaseActivity(), MainActivityView {
         presenter.onCreate()
     }
 
+    override fun onBackPressed() {
+        if (supportFragmentManager.backStackEntryCount == 0) {
+            AlertDialog
+                .Builder(this)
+                .setTitle(R.string.exit_from)
+                .setPositiveButton(R.string.application) { dialog, which ->
+                    super.onBackPressed()
+                }
+                .setNegativeButton(R.string.account) { dialog, which ->
+                    presenter.onExitAccount()
+                }
+                .create()
+                .show()
+        }
+    }
 }

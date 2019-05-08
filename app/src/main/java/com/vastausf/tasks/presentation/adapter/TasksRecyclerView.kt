@@ -9,6 +9,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.vastausf.tasks.R
 import com.vastausf.tasks.model.api.tasksApiData.TaskDataFull
+import com.vastausf.tasks.model.api.tasksApiData.TaskStatus
 import kotlinx.android.synthetic.main.item_task.view.*
 
 class TasksRecyclerView(
@@ -37,9 +38,9 @@ class TasksRecyclerView(
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         fun bind(item: TaskDataFull) {
-            itemView.etTitle.text = item.title
-            itemView.tvStatus.text = item.status.toString()
-            itemView.etDescription.text = item.description
+            itemView.tvTitle.text = item.title
+            itemView.tvStatus.setText(TaskStatus.fromInt(item.status))
+            itemView.tvDescription.text = item.description
 
             itemView.setOnClickListener {
                 listener.onTaskClick(item)

@@ -55,7 +55,12 @@ class ProjectEditFragment : BaseFragment(), ProjectEditFragmentView, DocumentsRe
     }
 
     override fun onUserClick(userData: UserData, view: View) {
-        showToast(userData)
+        AlertDialog
+            .Builder(context)
+            .setTitle("${userData.lastName} ${userData.firstName} ${userData.middleName}")
+            .setMessage(userData.email)
+            .create()
+            .show()
     }
 
     override fun onUserLongClick(userData: UserData, view: View) {

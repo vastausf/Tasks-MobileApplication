@@ -11,7 +11,6 @@ import com.arellomobile.mvp.presenter.InjectPresenter
 import com.arellomobile.mvp.presenter.ProvidePresenter
 import com.vastausf.tasks.R
 import com.vastausf.tasks.di.fragment.DaggerFragmentComponent
-import com.vastausf.tasks.model.api.tasksApiData.ProjectDataEdit
 import com.vastausf.tasks.presentation.fragment.base.BaseFragment
 import com.vastausf.tasks.presentation.fragment.projectEdit.ProjectEditFragment
 import kotlinx.android.synthetic.main.fragment_project.view.*
@@ -48,6 +47,9 @@ class ProjectFragment : BaseFragment(), ProjectFragmentView {
                 .inject(this)
         }
         super.onCreate(savedInstanceState)
+
+        presenter.projectId = projectId
+        presenter.loadProjectData()
     }
 
     override fun bindProjectData() {
@@ -91,14 +93,23 @@ class ProjectFragment : BaseFragment(), ProjectFragmentView {
                     .Builder(context)
                     .setItems(presenter.projectData.credentials.map {
                         "${it.firstName} ${it.lastName}"
-                    }.toTypedArray(), null)
+                    }.toTypedArray()) { dialog, which ->
+                        val item = presenter.projectData.credentials[which]
+
+                        AlertDialog
+                            .Builder(context)
+                            .setTitle("${item.lastName} ${item.firstName} ${item.middleName}")
+                            .setMessage(item.email)
+                            .create()
+                            .show()
+                    }
                     .create()
                     .show()
             }
 
-            etTitle.setText(presenter.projectData.title)
+            tvTitle.text = presenter.projectData.title
 
-            etDescription.setText(presenter.projectData.description)
+            tvDescription.text = presenter.projectData.description
 
             srlProject.setOnRefreshListener {
                 presenter.loadProjectData()
@@ -106,7 +117,7 @@ class ProjectFragment : BaseFragment(), ProjectFragmentView {
 
             bEdit.setOnClickListener {
                 launchFragment(ProjectEditFragment(), bundle = Bundle().apply {
-                    putInt("projectId", projectId)
+                    putInt("projectId", presenter.projectId)
                 })
             }
         }
@@ -118,13 +129,6 @@ class ProjectFragment : BaseFragment(), ProjectFragmentView {
         view?.apply {
             srlProject.isRefreshing = status
         }
-    }
-
-    override fun onStart() {
-        super.onStart()
-
-        presenter.projectId = projectId
-        presenter.loadProjectData()
     }
 
 }

@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.design.widget.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Toolbar
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="end">
+
+                <ImageButton
+                    android:id="@+id/bTaskEditApply"
+                    android:layout_width="@dimen/view_size_large"
+                    android:layout_height="@dimen/view_size_large"
+                    android:background="@color/colorTransparent"
+                    android:src="@drawable/ic_check" />
+            </LinearLayout>
+        </Toolbar>
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/srlTaskEdit"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <EditText
+                    android:id="@+id/etTaskEditTitle"
+                    style="@style/EditText.WithoutUnderline"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/title"
+                    android:textSize="@dimen/font_size_x_large"
+                    android:textStyle="bold"
+                    android:inputType="textCapSentences" />
+
+                <EditText
+                    android:id="@+id/etTaskEditDescription"
+                    style="@style/EditText.WithoutUnderline"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:hint="@string/description"
+                    android:textSize="@dimen/font_size_large"
+                    android:inputType="textCapSentences"/>
+
+                <Button
+                    android:id="@+id/bTaskEditAssignTo"
+                    style="@style/ButtonSimple"
+                    android:text="@string/assign_to"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
+    </android.support.v4.widget.SwipeRefreshLayout>
+</LinearLayout>

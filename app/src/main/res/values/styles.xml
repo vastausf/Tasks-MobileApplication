@@ -34,6 +34,7 @@
     <style name="EditText.WithoutUnderline" parent="EditText">
         <item name="android:background">@drawable/background_editable_text</item>
         <item name="android:layout_margin">@dimen/spacing_xxx_small</item>
+        <item name="android:inputType">text|textCapSentences</item>
     </style>
 
     <style name="ButtonAccent" parent="AppTheme">
@@ -51,11 +52,11 @@
     <style name="TextHeader" parent="AppTheme">
         <item name="android:textSize">@dimen/font_size_large</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:layout_margin">@dimen/spacing_xxx_small</item>
     </style>
 
     <style name="TextContent" parent="AppTheme">
         <item name="android:textSize">@dimen/font_size_normal</item>
-        <item name="android:textStyle">bold</item>
     </style>
 
     <style name="TextHint" parent="AppTheme">

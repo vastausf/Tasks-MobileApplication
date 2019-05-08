@@ -24,6 +24,7 @@ import com.vastausf.tasks.model.api.tasksApiData.TaskStatus
 import com.vastausf.tasks.model.api.tasksApiData.UserData
 import com.vastausf.tasks.presentation.fragment.base.BaseFragment
 import com.vastausf.tasks.presentation.fragment.projectInfo.ProjectInfoFragment
+import com.vastausf.tasks.presentation.fragment.taskEdit.TaskEditFragment
 import com.vastausf.tasks.presentation.fragment.userList.UserListFragment
 import kotlinx.android.synthetic.main.fragment_task.view.*
 import java.text.SimpleDateFormat
@@ -60,8 +61,8 @@ class TaskFragment : BaseFragment(), TaskFragmentView {
 
     override fun bindTaskData() {
         view?.apply {
-            etTitle.apply {
-                setText(presenter.taskData.title)
+            tvTitle.apply {
+                text = presenter.taskData.title
 
                 addTextChangedListener(object : TextWatcher {
                     override fun afterTextChanged(s: Editable?) {
@@ -85,12 +86,11 @@ class TaskFragment : BaseFragment(), TaskFragmentView {
                     ) {
 
                     }
-
                 })
             }
 
-            etDescription.apply {
-                setText(presenter.taskData.description)
+            tvDescription.apply {
+                text = presenter.taskData.description
 
                 addTextChangedListener(object : TextWatcher {
                     override fun afterTextChanged(s: Editable?) {
@@ -118,27 +118,35 @@ class TaskFragment : BaseFragment(), TaskFragmentView {
                 })
             }
 
-            tvCreatedBy.text =
-                "${presenter.taskData.creatorId.firstName} ${presenter.taskData.creatorId.lastName}"
+            tvCreatedBy.apply {
+                presenter.taskData.creatorId.let { userData ->
+                    text =
+                        "${userData.firstName} ${userData.lastName}"
+
+                    setOnClickListener {
+                        AlertDialog
+                            .Builder(context)
+                            .setTitle("${userData.lastName} ${userData.firstName} ${userData.middleName}")
+                            .setMessage(userData.email)
+                            .create()
+                            .show()
+                    }
+                }
+            }
 
             tvAssignTo.apply {
-                text =
-                    "${presenter.taskData.assignId.firstName} ${presenter.taskData.assignId.lastName}"
+                presenter.taskData.assignId.let { userData ->
+                    text =
+                        "${userData.firstName} ${userData.lastName}"
 
-                setOnClickListener {
-                    launchFragment(UserListFragment().apply {
-                        userListener = object : UserListFragment.UserListListener {
-                            override fun onUserClick(
-                                userData: UserData,
-                                fragment: UserListFragment
-                            ) {
-                                tvAssignTo.text = "${userData.firstName} ${userData.lastName}"
-                                this@TaskFragment.presenter.taskDataEdit.assigned = userData.id
-
-                                fragment.goBack()
-                            }
-                        }
-                    })
+                    setOnClickListener {
+                        AlertDialog
+                            .Builder(context)
+                            .setTitle("${userData.lastName} ${userData.firstName} ${userData.middleName}")
+                            .setMessage(userData.email)
+                            .create()
+                            .show()
+                    }
                 }
             }
 
@@ -222,9 +230,13 @@ class TaskFragment : BaseFragment(), TaskFragmentView {
                 }
             }
 
-            fabEditTask.apply {
+            bEdit.apply {
+                visibility = if (presenter.canEditData) View.VISIBLE else View.GONE
+
                 setOnClickListener {
-                    presenter.editModeState = !presenter.editModeState
+                    launchFragment(TaskEditFragment(), bundle = Bundle().apply {
+                        putInt("taskId", presenter.taskId)
+                    })
                 }
             }
 
@@ -239,9 +251,6 @@ class TaskFragment : BaseFragment(), TaskFragmentView {
             }
 
             activity?.setActionBar(tTask)
-
-            @RequiresApi
-            fabEditTask.visibility = if (presenter.canEditData) View.VISIBLE else View.GONE
         }
     }
 
@@ -255,8 +264,8 @@ class TaskFragment : BaseFragment(), TaskFragmentView {
         view?.apply {
             val state = presenter.editModeState
 
-            etTitle.isEnabled = state
-            etDescription.isEnabled = state
+            tvTitle.isEnabled = state
+            tvDescription.isEnabled = state
 
             tvAssignTo.isEnabled = state
         }

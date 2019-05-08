@@ -34,8 +34,8 @@ class ProjectsRecyclerView(
     inner class ViewHolder(view: View) : RecyclerView.ViewHolder(view) {
 
         fun bind(item: ProjectDataShort) {
-            itemView.etTitle.text = item.title
-            itemView.etDescription.text = item.description
+            itemView.tvTitle.text = item.title
+            itemView.tvDescription.text = item.description
 
             itemView.setOnClickListener {
                 listener.onProjectClick(item)

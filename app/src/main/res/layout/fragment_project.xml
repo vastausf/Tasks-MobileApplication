@@ -9,11 +9,11 @@
         android:layout_height="wrap_content">
 
         <Toolbar
-            app:layout_scrollFlags="scroll|snap"
             android:id="@+id/tProject"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimary">
+            android:background="@color/colorPrimary"
+            app:layout_scrollFlags="scroll|snap">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -22,30 +22,27 @@
 
                 <LinearLayout
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content">
+                    android:layout_height="wrap_content"
+                    android:gravity="center">
 
-                    <EditText
-                        android:textColor="@color/colorTextLight"
-                        android:id="@+id/etTitle"
-                        style="@style/EditText.WithoutUnderline"
+                    <TextView
+                        android:id="@+id/tvTitle"
+                        style="@style/TextHeader"
                         android:layout_width="0dp"
-                        android:layout_weight="1"
                         android:layout_height="wrap_content"
-                        android:enabled="false"
-                        android:hint="@string/title"
-                        android:inputType="textCapCharacters"
+                        android:layout_weight="1"
                         android:maxLines="1"
                         android:textAlignment="textStart"
+                        android:textColor="@color/colorTextLight"
                         android:textSize="@dimen/font_size_x_large"
-                        android:textStyle="bold"
-                        />
+                        android:textStyle="bold" />
 
                     <ImageButton
                         android:id="@+id/bEdit"
                         android:layout_width="@dimen/view_size_large"
                         android:layout_height="@dimen/view_size_large"
-                        android:src="@drawable/ic_edit"
-                        android:background="@color/colorTransparent" />
+                        android:background="@color/colorTransparent"
+                        android:src="@drawable/ic_edit" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -57,22 +54,22 @@
                         android:id="@+id/bDocuments"
                         android:layout_width="@dimen/view_size_large"
                         android:layout_height="@dimen/view_size_large"
-                        android:src="@drawable/ic_attach_file"
-                        android:background="@color/colorTransparent" />
+                        android:background="@color/colorTransparent"
+                        android:src="@drawable/ic_attach_file" />
 
                     <ImageButton
                         android:id="@+id/bCredentials"
                         android:layout_width="@dimen/view_size_large"
                         android:layout_height="@dimen/view_size_large"
-                        android:src="@drawable/ic_people"
-                        android:background="@color/colorTransparent" />
+                        android:background="@color/colorTransparent"
+                        android:src="@drawable/ic_people" />
 
                     <ImageButton
                         android:id="@+id/bSpecification"
                         android:layout_width="@dimen/view_size_large"
                         android:layout_height="@dimen/view_size_large"
-                        android:src="@drawable/ic_file"
-                        android:background="@color/colorTransparent" />
+                        android:background="@color/colorTransparent"
+                        android:src="@drawable/ic_file" />
                 </LinearLayout>
             </LinearLayout>
         </Toolbar>
@@ -82,11 +79,11 @@
         android:id="@+id/srlProject"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_behavior="android.support.design.widget.AppBarLayout$ScrollingViewBehavior">
+        app:layout_constraintTop_toTopOf="parent">
 
         <android.support.v4.widget.NestedScrollView
             android:id="@+id/svProject"
@@ -99,15 +96,12 @@
                 android:layout_gravity="center_horizontal"
                 android:orientation="vertical">
 
-                <EditText
-                    android:id="@+id/etDescription"
-                    style="@style/EditText.WithoutUnderline"
+                <TextView
+                    android:layout_margin="@dimen/spacing_xxx_small"
+                    android:id="@+id/tvDescription"
+                    style="@style/TextContent"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/background_editable_text"
-                    android:enabled="false"
-                    android:hint="@string/description"
-                    android:minLines="3"
                     android:textAlignment="textStart"
                     android:textSize="@dimen/font_size_normal" />
             </LinearLayout>

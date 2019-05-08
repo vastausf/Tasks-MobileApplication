@@ -8,6 +8,7 @@ import com.vastausf.tasks.presentation.fragment.projectEdit.ProjectEditFragment
 import com.vastausf.tasks.presentation.fragment.projectInfo.ProjectInfoFragment
 import com.vastausf.tasks.presentation.fragment.projectList.ProjectListFragment
 import com.vastausf.tasks.presentation.fragment.task.TaskFragment
+import com.vastausf.tasks.presentation.fragment.taskEdit.TaskEditFragment
 import com.vastausf.tasks.presentation.fragment.taskList.TaskListFragment
 import com.vastausf.tasks.presentation.fragment.userList.UserListFragment
 import dagger.Component
@@ -32,5 +33,7 @@ interface FragmentComponent {
     fun inject(projectInfoFragment: ProjectInfoFragment)
 
     fun inject(projectEditFragment: ProjectEditFragment)
+
+    fun inject(taskEditFragment: TaskEditFragment)
 
 }

@@ -28,6 +28,7 @@ class ProjectInfoFragment: BaseFragment(), ProjectInfoFragmentView, TaskListFrag
         launchFragment(TaskFragment(), bundle = Bundle().apply {
             putInt("taskId", taskData.id)
         })
+
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {

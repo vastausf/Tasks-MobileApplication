@@ -66,5 +66,4 @@ class MainFragment : BaseFragment(), MainFragmentView, ProjectListFragment.Proje
 
         super.onCreate(savedInstanceState)
     }
-
 }

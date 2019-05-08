@@ -20,18 +20,31 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
-                <EditText
-                    android:id="@+id/etTitle"
-                    style="@style/EditText.WithoutUnderline"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:enabled="false"
-                    android:hint="@string/title"
-                    android:inputType="textCapCharacters"
-                    android:maxLines="1"
-                    android:textAlignment="textStart"
-                    android:textColor="@color/colorTextLight"
-                    android:textSize="@dimen/font_size_x_large" />
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/tvTitle"
+                        style="@style/TextHeader"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:ellipsize="end"
+                        android:textStyle="bold"
+                        android:layout_weight="1"
+                        android:singleLine="true"
+                        android:textAlignment="textStart"
+                        android:textColor="@color/colorTextLight"
+                        android:textSize="@dimen/font_size_x_large" />
+
+                    <ImageButton
+                        android:id="@+id/bEdit"
+                        android:layout_width="@dimen/view_size_large"
+                        android:layout_height="@dimen/view_size_large"
+                        android:src="@drawable/ic_edit"
+                        android:background="@color/colorTransparent" />
+                </LinearLayout>
 
                 <Button
                     android:id="@+id/bTaskStatus"
@@ -43,11 +56,12 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:orientation="vertical">
+                    android:orientation="horizontal">
 
                     <TextView
                         android:id="@+id/tvCreatedBy"
                         style="@style/TextHint"
+                        android:layout_weight="1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/spacing_xxx_small"
@@ -57,10 +71,10 @@
                     <TextView
                         android:id="@+id/tvAssignTo"
                         style="@style/TextHint"
+                        android:layout_weight="1"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_margin="@dimen/spacing_xxx_small"
-                        android:enabled="false"
                         android:textAlignment="textEnd"
                         android:textColor="@color/colorTextLight"
                         android:textSize="@dimen/font_size_small" />
@@ -100,31 +114,15 @@
 
                 <View style="@style/Separator" />
 
-                <EditText
-                    android:id="@+id/etDescription"
-                    style="@style/EditText.WithoutUnderline"
+                <TextView
+                    android:id="@+id/tvDescription"
+                    style="@style/TextContent"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:background="@drawable/background_editable_text"
-                    android:enabled="false"
-                    android:hint="@string/description"
-                    android:minLines="3"
                     android:textAlignment="textStart"
+                    android:layout_margin="@dimen/spacing_xxx_small"
                     android:textSize="@dimen/font_size_normal" />
             </LinearLayout>
         </android.support.v4.widget.NestedScrollView>
-
     </android.support.v4.widget.SwipeRefreshLayout>
-
-    <android.support.design.widget.FloatingActionButton
-        android:id="@+id/fabEditTask"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/spacing_x_small"
-        android:src="@drawable/ic_edit"
-        android:visibility="gone"
-        app:layout_anchor="@id/svTask"
-        app:layout_anchorGravity="bottom|end"
-        app:layout_behavior=".utils.FloatingActionButtonHideOnScrollBehavior" />
 </android.support.design.widget.CoordinatorLayout>

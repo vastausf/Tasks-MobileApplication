@@ -23,6 +23,11 @@
     <string name="success">success</string>
     <string name="apply">apply</string>
 
+    <string name="exit_from">exit from…</string>
+    <string name="account">account</string>
+    <string name="application">application</string>
+
+
     <string name="add">add</string>
 
     <string name="heres_nothing">here\'s nothing</string>

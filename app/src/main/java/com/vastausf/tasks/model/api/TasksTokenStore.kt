@@ -32,4 +32,9 @@ constructor(
                 .apply()
         }
 
+    fun clearTokens() {
+        tasksSharedPreferences.edit().apply {
+            remove(accessTokenSharedPreferences)
+        }.apply()
+    }
 }

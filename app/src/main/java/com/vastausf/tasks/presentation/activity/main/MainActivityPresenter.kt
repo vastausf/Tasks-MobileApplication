@@ -24,4 +24,10 @@ constructor(
         }
     }
 
+    fun onExitAccount() {
+        tasksTokenStore.clearTokens()
+
+        viewState.launchFragment(LoginFragment(), true)
+    }
+
 }
