@@ -32,7 +32,7 @@ class MainActivity : BaseActivity(), MainActivityView {
     }
 
     override fun onBackPressed() {
-        if (supportFragmentManager.backStackEntryCount == 0) {
+        if (supportFragmentManager.backStackEntryCount == 0 && presenter.haveAccessToken) {
             AlertDialog
                 .Builder(this)
                 .setTitle(R.string.exit_from)
@@ -44,6 +44,8 @@ class MainActivity : BaseActivity(), MainActivityView {
                 }
                 .create()
                 .show()
+        } else {
+            super.onBackPressed()
         }
     }
 }

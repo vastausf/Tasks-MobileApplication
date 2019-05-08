@@ -35,7 +35,7 @@ constructor(
                 .getToken(login, password)
                 .subscribeOn(Schedulers.io())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(::onLoginSuccess, ::onLoginError)
+                .subscribe(this::onLoginSuccess, this::onLoginError)
                 .unsubscribeOnDestroy()
         } else {
             viewState.showToast(R.string.incorrect_login_or_password)
@@ -45,9 +45,7 @@ constructor(
     private fun onLoginSuccess(data: AuthTokenGetC) {
         tasksTokenStore.accessToken = data.token
 
-        viewState.launchFragment(MainFragment())
-
-        viewState.showToast(data.token)
+        viewState.launchFragment(MainFragment(), true)
     }
 
     private fun onLoginError(error: Throwable) {

@@ -52,13 +52,7 @@ constructor(
 
     private fun onLoadProjectsError(error: Throwable) {
         when (error) {
-            is HttpException -> viewState.showToast(error.code())
-
-            else -> {
-                viewState.showToast(error::class.java.name)
-                viewState.showToast(R.string.error)
-                error.printStackTrace()
-            }
+            is HttpException -> viewState.showToast(error.code().toString())
         }
     }
 

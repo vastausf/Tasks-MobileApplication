@@ -14,8 +14,7 @@ import javax.inject.Inject
 class TaskListFragmentPresenter
 @Inject
 constructor(
-    private val tasksApiClient: TasksApiClient,
-    private val tasksTokenStore: TasksTokenStore
+    private val tasksApiClient: TasksApiClient
 ) : BaseFragmentPresenter<TaskListFragmentView>() {
     val taskDataSearch = TaskDataSearch()
 

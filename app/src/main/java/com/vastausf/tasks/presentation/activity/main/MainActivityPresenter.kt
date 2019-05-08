@@ -12,15 +12,18 @@ import javax.inject.Inject
 class MainActivityPresenter
 @Inject
 constructor(
-    private val tasksApplication: TasksApplication,
     private val tasksTokenStore: TasksTokenStore
 ) : BaseActivityPresenter<MainActivityView>() {
+    val haveAccessToken: Boolean
+        get() {
+            return tasksTokenStore.accessToken.isNotEmpty()
+        }
 
     fun onCreate() {
-        if (tasksTokenStore.accessToken.isEmpty()) {
-            viewState.launchFragment(LoginFragment(), true)
-        } else {
+        if (haveAccessToken) {
             viewState.launchFragment(MainFragment(), true)
+        } else {
+            viewState.launchFragment(LoginFragment(), true)
         }
     }
 

@@ -1,6 +1,6 @@
 <resources>
     <string name="app_name">Tasks</string>
-    <string name="tasks_base_server_url">http://194.1.239.114:17646</string>
+    <string name="tasks_base_server_url" translatable="false">http://194.1.239.114:17646</string>
 
     <string name="created">created</string>
     <string name="assigned">assigned</string>
@@ -11,7 +11,7 @@
     <string name="closed">closed</string>
     <string name="rejected">rejected</string>
 
-    <string name="unexpected_status">rejected</string>
+    <string name="unexpected_status">unexpected status</string>
 
     <string name="login">login</string>
     <string name="password">password</string>
@@ -19,7 +19,7 @@
 
     <string name="incorrect_login_or_password">incorrect login or password</string>
 
-    <string name="error">error</string>
+    <string name="error">oops… something went wrong</string>
     <string name="success">success</string>
     <string name="apply">apply</string>
 
@@ -44,7 +44,7 @@
     <string name="choose_user">choose user</string>
     <string name="first_name">first name</string>
     <string name="last_name">last name</string>
-    <string name="tag_fragment_project_task_list">tag_fragment_project_task_list</string>
+    <string name="tag_fragment_project_task_list" translatable="false">tag_fragment_project_task_list</string>
     <string name="credentials">credentials</string>
 
     <string name="create">create</string>
@@ -67,7 +67,7 @@
     <string name="created_by">created by</string>
     <string name="assign_to">assign to</string>
     <string name="middle_name">middle name</string>
-    <string name="email">email</string>
+    <string name="email" translatable="false">email</string>
     <string name="history">history</string>
     <string name="open_project">open project</string>
     <string name="without_specification">without specification</string>
